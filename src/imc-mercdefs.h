@@ -87,7 +87,7 @@ void append_note(NOTE_DATA *pnote);
 #define IS_NOCHAN(ch) (IS_SET((ch)->act, PLR_SILENCE))
 #define IS_NOTELL(ch) (IS_SET((ch)->act, PLR_NO_TELL) || IS_NOCHAN(ch))
 #define IS_SILENT(ch) ((!IS_NPC(ch) && IS_SET(ch->act,PLR_SILENCE)) || \
-		       IS_SET(ch->in_room->room_flags, ROOM_SILENCE))
+               IS_SET(ch->in_room->room_flags, ROOM_SILENCE))
 #define IS_QUIET(ch) (0)
 #define page_to_char send_to_pager_color
 #define send_to_char send_to_char_color
@@ -103,7 +103,7 @@ void append_note(NOTE_DATA *pnote);
 #define IS_NOCHAN(ch) (IS_SET((ch)->act, PLR_SILENCE))
 #define IS_NOTELL(ch) (IS_SET((ch)->act, PLR_NO_TELL) || IS_NOCHAN(ch))
 #define IS_SILENT(ch) ((IS_AFFECTED((ch),AFF_MUTE) || \
-	  /* IS_SET(race_table[(ch)->race].race_abilities, RACE_MUTE) || */ \
+      /* IS_SET(race_table[(ch)->race].race_abilities, RACE_MUTE) || */ \
              IS_SET((ch)->in_room->room_flags, ROOM_CONE_OF_SILENCE)))
 #define IS_QUIET(ch) (0)
 #define page_to_char send_to_char
@@ -114,7 +114,7 @@ void append_note(NOTE_DATA *pnote);
 #define IS_NOCHAN(ch) (IS_SET((ch)->act, PLR_SILENCE))
 #define IS_NOTELL(ch) (IS_SET((ch)->act, PLR_NO_TELL) || IS_NOCHAN(ch))
 #define IS_SILENT(ch) (IS_SET(ch->act,PLR_SILENCE) || \
-		       IS_SET(ch->in_room->room_flags, ROOM_QUIET))
+               IS_SET(ch->in_room->room_flags, ROOM_QUIET))
 #define IS_QUIET(ch) (0)
 #define page_to_char send_to_char
 #define descriptor_list first_desc

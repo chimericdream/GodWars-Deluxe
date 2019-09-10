@@ -48,43 +48,43 @@ char retrypath[1000];
 void showerror(void)
 {
   printf("<html>\n"
-	 "<head>\n"
-	 "<link rev=\"made\" href=\"mailto:" EMAIL "\">\n"
-	 "<meta name=\"robots\" content=\"noindex\">\n"
-	 "<title>Error</title>\n"
-	 "</head>\n"
-	 "<body>\n"
-	 "<h1>Error</h1>\n"
-	 "<p>An error occured when reading from the IMC interface server.\n"
-	 "The server may be down, or your query may be invalid.\n"
-	 "You may want to <a href=\"%s\">try again</a> later.\n"
-	 "<hr>\n"
-	 "<p>Return to the <a href=\"" PAGE "?type=list\">IMC list page</a>.\n"
-	 "<p>Please contact <a href=\"mailto:" EMAIL "\">" EMAIL "</a> "
-	 "with any problems with this gateway.\n"
-	 "</body>\n"
-	 "</html>\n", retrypath);
+     "<head>\n"
+     "<link rev=\"made\" href=\"mailto:" EMAIL "\">\n"
+     "<meta name=\"robots\" content=\"noindex\">\n"
+     "<title>Error</title>\n"
+     "</head>\n"
+     "<body>\n"
+     "<h1>Error</h1>\n"
+     "<p>An error occured when reading from the IMC interface server.\n"
+     "The server may be down, or your query may be invalid.\n"
+     "You may want to <a href=\"%s\">try again</a> later.\n"
+     "<hr>\n"
+     "<p>Return to the <a href=\"" PAGE "?type=list\">IMC list page</a>.\n"
+     "<p>Please contact <a href=\"mailto:" EMAIL "\">" EMAIL "</a> "
+     "with any problems with this gateway.\n"
+     "</body>\n"
+     "</html>\n", retrypath);
 }
 
 void showinternalerror(void)
 {
   printf("<html>\n"
-	 "<head>\n"
-	 "<link rev=\"made\" href=\"mailto:" EMAIL "\">\n"
-	 "<meta name=\"robots\" content=\"noindex\">\n"
-	 "<title>Internal error</title>\n"
-	 "</head>\n"
-	 "<body>\n"
-	 "<h1>Internal Error</h1>\n"
-	 "<p>An internal error occured within the CGI software.\n"
-	 "The server may be overloaded. You may want to "
-	 "<a href=\"%s\">try again</a> later.\n"
-	 "<hr>\n"
-	 "<p>Return to the <a href=\"" PAGE "?type=list\">IMC list page</a>.\n"
-	 "<p>Please contact <a href=\"mailto:" EMAIL "\">" EMAIL "</a> "
-	 "with any problems with this gateway.\n"
-	 "</body>\n"
-	 "</html>\n", retrypath);
+     "<head>\n"
+     "<link rev=\"made\" href=\"mailto:" EMAIL "\">\n"
+     "<meta name=\"robots\" content=\"noindex\">\n"
+     "<title>Internal error</title>\n"
+     "</head>\n"
+     "<body>\n"
+     "<h1>Internal Error</h1>\n"
+     "<p>An internal error occured within the CGI software.\n"
+     "The server may be overloaded. You may want to "
+     "<a href=\"%s\">try again</a> later.\n"
+     "<hr>\n"
+     "<p>Return to the <a href=\"" PAGE "?type=list\">IMC list page</a>.\n"
+     "<p>Please contact <a href=\"mailto:" EMAIL "\">" EMAIL "</a> "
+     "with any problems with this gateway.\n"
+     "</body>\n"
+     "</html>\n", retrypath);
 }
 
 struct conv_type {
@@ -188,22 +188,22 @@ void readfromserver(int fd)
   if (!r || handled_alarm)
   {
     printf("<html>\n"
-	   "<head>\n"
-	   "<link rev=\"made\" href=\"mailto:" EMAIL "\">\n"
-	   "<meta name=\"robots\" content=\"noindex\">\n"
-	   "<title>Timeout</title>\n"
-	   "</head>\n"
-	   "<body>\n"
-	   "<h1>Timeout</h1>\n"
-	   "<p>No response was received from the specified mud within\n"
-	   "30 seconds. The mud may be down, or the network may be having\n"
-	   "problems. You may want to <a href=\"%s\">try again</a> later.\n"
-	   "<hr>\n"
-	   "<p>Return to the <a href=\"" PAGE "?type=list\">IMC list page</a>.\n"
-	   "<p>Please contact <a href=\"mailto:" EMAIL "\">" EMAIL "</a> "
-	   "with any problems with this gateway.\n"
-	   "</body>\n"
-	   "</html>\n", retrypath);
+       "<head>\n"
+       "<link rev=\"made\" href=\"mailto:" EMAIL "\">\n"
+       "<meta name=\"robots\" content=\"noindex\">\n"
+       "<title>Timeout</title>\n"
+       "</head>\n"
+       "<body>\n"
+       "<h1>Timeout</h1>\n"
+       "<p>No response was received from the specified mud within\n"
+       "30 seconds. The mud may be down, or the network may be having\n"
+       "problems. You may want to <a href=\"%s\">try again</a> later.\n"
+       "<hr>\n"
+       "<p>Return to the <a href=\"" PAGE "?type=list\">IMC list page</a>.\n"
+       "<p>Please contact <a href=\"mailto:" EMAIL "\">" EMAIL "</a> "
+       "with any problems with this gateway.\n"
+       "</body>\n"
+       "</html>\n", retrypath);
   }
   else if (whoflag || infoflag)
   {
@@ -211,75 +211,75 @@ void readfromserver(int fd)
     struct conv_type *trans_table;
 
     printf("<html>\n"
-	   "<head>\n"
-	   "<link rev=\"made\" href=\"mailto:" EMAIL "\">\n"
-	   "<meta name=\"robots\" content=\"noindex\">\n"
+       "<head>\n"
+       "<link rev=\"made\" href=\"mailto:" EMAIL "\">\n"
+       "<meta name=\"robots\" content=\"noindex\">\n"
            "<meta http-equiv=\"refresh\" content=\"900\">\n"
-	   "<title>%s %s</title>\n"
-	   "</head>\n"
-	   "<body%s>\n"
-	   "<h1>Results</h1>\n"
-	   "<pre>%s\n",
-	   whoflag ? "Results for RWHO" : "Info on",
-	   mudname,
-	   color ? " bgcolor=#000000 text=#FFFFFF" : "",
-	   color ? "<font color=#DFDFDF>" : "");
+       "<title>%s %s</title>\n"
+       "</head>\n"
+       "<body%s>\n"
+       "<h1>Results</h1>\n"
+       "<pre>%s\n",
+       whoflag ? "Results for RWHO" : "Info on",
+       mudname,
+       color ? " bgcolor=#000000 text=#FFFFFF" : "",
+       color ? "<font color=#DFDFDF>" : "");
 
     trans_table = color ? color_table : nocolor_table;
 
-    for (in=result; *in; )
+    for (in=result; *in;)
     {
       if (*in=='&')
       {
-	printf("&amp;");
-	in++;
-	continue;
+    printf("&amp;");
+    in++;
+    continue;
       }
       else if (*in=='<')
       {
-	printf("&lt;");
-	in++;
-	continue;
+    printf("&lt;");
+    in++;
+    continue;
       }
       else if (*in=='>')
       {
-	printf("&gt;");
-	in++;
-	continue;
+    printf("&gt;");
+    in++;
+    continue;
       }
       else if (*in=='~')
       {
-	int i, l;
+    int i, l;
 
-	for (i=0; i<numtrans; i++)
-	{
-	  l=strlen(trans_table[i].imc);
-	  if (l && !strncmp(in, trans_table[i].imc, l))
-	    break;
-	}
+    for (i=0; i<numtrans; i++)
+    {
+      l=strlen(trans_table[i].imc);
+      if (l && !strncmp(in, trans_table[i].imc, l))
+        break;
+    }
       
-	if (i!=numtrans)       /* match */
-	{
-	  printf(trans_table[i].mud);
-	  in+=l;
-	  continue;
-	}
+    if (i!=numtrans)       /* match */
+    {
+      printf(trans_table[i].mud);
+      in+=l;
+      continue;
+    }
       }
       else if (*in=='\r')
       {
-	in++;
-	continue;
+    in++;
+    continue;
       }
 
       putchar(*in++);
     }
   
     printf("%s</pre><hr>\n"
-	   "<p>Return to the <a href=\"" PAGE "?type=list\">IMC list page</a>.\n"
-	   "<p>Please contact <a href=\"mailto:" EMAIL "\">" EMAIL "</a> "
-	   "with any problems with this gateway.\n"
-	   "</body></html>\n",
-	   color ? "</font>" : "");
+       "<p>Return to the <a href=\"" PAGE "?type=list\">IMC list page</a>.\n"
+       "<p>Please contact <a href=\"mailto:" EMAIL "\">" EMAIL "</a> "
+       "with any problems with this gateway.\n"
+       "</body></html>\n",
+       color ? "</font>" : "");
   }
   else /* list */
   {
@@ -288,17 +288,17 @@ void readfromserver(int fd)
     char *in;
 
     printf("<html>\n"
-	   "<head>\n"
-	   "<link rev=\"made\" href=\"mailto:" EMAIL "\">\n"
-	   "<meta name=\"robots\" content=\"noindex\">\n"
+       "<head>\n"
+       "<link rev=\"made\" href=\"mailto:" EMAIL "\">\n"
+       "<meta name=\"robots\" content=\"noindex\">\n"
            "<meta http-equiv=\"refresh\" content=\"600\">\n"
-	   "<title>IMC List</title>\n"
-	   "</head>\n"
-	   "<body>\n"
-	   "<h1>Active muds on IMC</h1>\n"
+       "<title>IMC List</title>\n"
+       "</head>\n"
+       "<body>\n"
+       "<h1>Active muds on IMC</h1>\n"
            "<hr>\n"
            "<p>Select a mud below to get information on.\n"
-	   "<p><form action=\"" PAGE "\" method=\"get\">\n"
+       "<p><form action=\"" PAGE "\" method=\"get\">\n"
            "Query type: <select name=\"type\" size=1>\n"
            "<p><option>Help\n"
            "<option selected>Who\n"
@@ -312,21 +312,21 @@ void readfromserver(int fd)
     {
       i=sscanf(in, "%s %s %d\n%n", name, version, &ping, &count);
       if (i<3)
-	break;
+    break;
 
       in+=count;
 
       printf("<input type=\"radio\" name=\"mud\" value=\"%s\">%-20s %s<br>\n",
-	     name, name, version);
+         name, name, version);
     }
 
     printf("<p><input type=\"submit\" value=\"Send request\">\n"
            "</form><hr>\n"
-	   "<p>Please contact <a href=\"mailto:" EMAIL "\">" EMAIL "</a> "
-	   "with any problems with this gateway.\n"
-	   "<p>Go to the <a href=\"http://www.toof.net/~imc/\">"
-	   "IMC2 homepage</a>.\n"
-	   "</body></html>\n");
+       "<p>Please contact <a href=\"mailto:" EMAIL "\">" EMAIL "</a> "
+       "with any problems with this gateway.\n"
+       "<p>Go to the <a href=\"http://www.toof.net/~imc/\">"
+       "IMC2 homepage</a>.\n"
+       "</body></html>\n");
   }
 }
 
@@ -384,27 +384,27 @@ void parse(const char *string)
     case '=':
       if (state==0)
       {
-	*out=0;
-	out=buf2;
-	state=1;
+    *out=0;
+    out=buf2;
+    state=1;
       }
       else
-	*out++='=';
+    *out++='=';
       
       string++;
       break;
     case '&':
       if (state==0)
       {
-	*out=0;
-	parse_value(buf1, out);
+    *out=0;
+    parse_value(buf1, out);
       }
       else
       {
-	*out=0;
-	parse_value(buf1, buf2);
-	out=buf1;
-	state=0;
+    *out=0;
+    parse_value(buf1, buf2);
+    out=buf1;
+    state=0;
       }
       
       string++;
@@ -473,10 +473,10 @@ void main(int argc, char *argv[])
   }
 
   sprintf(buf,
-	  "%s%s%s\n",
-	  listflag ? "list" : (whoflag ? "who" : "info"),
-	  listflag ? "" : " ",
-	  listflag ? "" : mudname);
+      "%s%s%s\n",
+      listflag ? "list" : (whoflag ? "who" : "info"),
+      listflag ? "" : " ",
+      listflag ? "" : mudname);
 
   if (write(fd, buf, strlen(buf))<0)
   {

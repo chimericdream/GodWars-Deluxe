@@ -126,8 +126,8 @@ void imc_recv_who(const imc_char_data *from, const char *type)
     else
     {
       sprintf(buf,
-	      "This is a CGI interface site.\n\r"
-	      "Its output can be accessed at %s.\n\r", url);
+          "This is a CGI interface site.\n\r"
+          "Its output can be accessed at %s.\n\r", url);
       imc_send_whoreply(from->name, buf, -1);
     }
   }
@@ -141,21 +141,21 @@ void imc_recv_who(const imc_char_data *from, const char *type)
   {
     strcpy(buf, imc_getstats());
     sprintf(buf+strlen(buf),
-	    "\n\rProcessed requests: %d\n\r", requests);
+        "\n\rProcessed requests: %d\n\r", requests);
     imc_send_whoreply(from->name, buf, -1);
   }
   else if (!strcasecmp(arg, "help") || !strcasecmp(arg, "services") ||
-	   !strcasecmp(arg, "help"))
+       !strcasecmp(arg, "help"))
     imc_send_whoreply(from->name,
-		      "Available rquery types:\n\r"
-		      "help       - this list\n\r"
-		      "info       - server information\n\r"
-		      "list       - active IMC connections\n\r"
-		      "istats     - IMC statistics\n\r", -1);
+              "Available rquery types:\n\r"
+              "help       - this list\n\r"
+              "info       - server information\n\r"
+              "list       - active IMC connections\n\r"
+              "istats     - IMC statistics\n\r", -1);
  
   else
     imc_send_whoreply(from->name,
-		      "Sorry, no information of that type is available", -1);
+              "Sorry, no information of that type is available", -1);
 }
 
 void imc_recv_whois(const imc_char_data *from, const char *to)
@@ -188,7 +188,7 @@ void imc_traceroute(int ping, const char *pathto, const char *pathfrom)
 }
 
 char *imc_mail_arrived(const char *from, const char *to, const char *date,
-		       const char *subject, const char *text)
+               const char *subject, const char *text)
 {
   return "This is a webserver interface only, and does not accept mail.";
 }
@@ -247,9 +247,9 @@ void complete_request(int index)
       char buf[100];
       while (expected<r->sequence)
       {
-	sprintf(buf, "\n\r[missing data for sequence %d]\n\r", expected);
-	write(clients[index].fd, buf, strlen(buf));
-	expected++;
+    sprintf(buf, "\n\r[missing data for sequence %d]\n\r", expected);
+    write(clients[index].fd, buf, strlen(buf));
+    expected++;
       }
     }
     
@@ -286,8 +286,8 @@ void add_request(int index, const char *text, int sequence)
   else
   {
     for (search=clients[index].reply;
-	 search->next && search->next->sequence < sequence;
-	 search=search->next)
+     search->next && search->next->sequence < sequence;
+     search=search->next)
       ;
 
     if (search->next && search->next->sequence == sequence)
@@ -334,11 +334,11 @@ void imc_recv_whoreply(const char *to, const char *text, int sequence)
     {
       if (sequence<0)
       {
-	clients[j].length=-sequence;
-	add_request(j, text, -sequence-1);
+    clients[j].length=-sequence;
+    add_request(j, text, -sequence-1);
       }
       else
-	add_request(j, text, sequence);
+    add_request(j, text, sequence);
       return;
     }
 }
@@ -498,9 +498,9 @@ void main(int argc, char *argv[])
     for (r=0; r<20; r++)
       if (clients[r].fd!=-1)
       {
-	FD_SET(clients[r].fd, &in_set);
-	if (clients[r].fd > maxfd)
-	  maxfd=clients[r].fd;
+    FD_SET(clients[r].fd, &in_set);
+    if (clients[r].fd > maxfd)
+      maxfd=clients[r].fd;
       }
     
     tv.tv_sec=imc_get_max_timeout();
@@ -529,22 +529,22 @@ void main(int argc, char *argv[])
       size=sizeof(sa);
       r=accept(fd, (struct sockaddr *)&sa, &size);
       if (r<0)
-	imc_lerror("CGI socket accept"); 
+    imc_lerror("CGI socket accept"); 
       else
-	runclient(r);
+    runclient(r);
     }
     
     for (r=0; r<20; r++)
       if (clients[r].fd!=-1 && FD_ISSET(clients[r].fd, &in_set))
       {
-	char dummy[100];
-	if (read(clients[r].fd, dummy, 100)<=0)
-	{
-	  close(clients[r].fd);
-	  clients[r].fd=-1;
-	  free_reply(clients[r].reply);
-	  freeclients++;
-	}
+    char dummy[100];
+    if (read(clients[r].fd, dummy, 100)<=0)
+    {
+      close(clients[r].fd);
+      clients[r].fd=-1;
+      free_reply(clients[r].reply);
+      freeclients++;
+    }
       }
   }
 

@@ -125,35 +125,35 @@ int imc_readconfig(void)
     {
       imc_getarg(value, word, 1000);
       if (sscanf(value, "%[^:]:%[^:]:%hu:%[^:]:%[^:]:%d:%d:%n",
-		 name, host, &port, pw1, pw2,
-		 &rcvstamp, &noforward, &count)<7)
+         name, host, &port, pw1, pw2,
+         &rcvstamp, &noforward, &count)<7)
       {
-	imc_logerror("Bad 'Connection' line: %s", buf);
-	continue;
+    imc_logerror("Bad 'Connection' line: %s", buf);
+    continue;
       }
 
       flags=imc_flagvalue(word + count, imc_connection_flags);
 
       i=imc_new_info();
-      i->name       = imc_strdup(name);
-      i->host       = imc_strdup(host);
-      i->clientpw   = imc_strdup(pw1);
-      i->serverpw   = imc_strdup(pw2);
-      i->port       = port;
-      i->rcvstamp   = rcvstamp;
-      i->noforward  = noforward;
-      i->flags      = flags;
+      i->name = imc_strdup(name);
+      i->host = imc_strdup(host);
+      i->clientpw = imc_strdup(pw1);
+      i->serverpw = imc_strdup(pw2);
+      i->port = port;
+      i->rcvstamp = rcvstamp;
+      i->noforward = noforward;
+      i->flags = flags;
     }
     else if (!strcasecmp(word, "LocalPort"))
     {
       if (localport!=-1)
-	imc_logstring("Warning: duplicate 'LocalPort' lines");
+    imc_logstring("Warning: duplicate 'LocalPort' lines");
       localport=atoi(value);
     }
     else if (!strcasecmp(word, "Bind"))
     {
       if (localip!=INADDR_ANY)
-	imc_logstring("Warning: duplicate 'Bind' lines");
+    imc_logstring("Warning: duplicate 'Bind' lines");
       localip=inet_addr(value);
     }
 
@@ -171,28 +171,28 @@ int imc_readconfig(void)
     else if (version==-1)
     {
       if (sscanf(buf, "%[^:]:%[^:]:%hu:%[^:]:%[^:]:%d:%d:%n",
-		 name, host, &port, pw1, pw2,
-		 &rcvstamp, &noforward, &count)<7)
+         name, host, &port, pw1, pw2,
+         &rcvstamp, &noforward, &count)<7)
       {
-	imc_logerror("Bad config line: %s", buf);
-	continue;
+    imc_logerror("Bad config line: %s", buf);
+    continue;
       }
 
       flags=imc_flagvalue(buf + count, imc_connection_flags);
     
       i=imc_new_info();
-      i->name       = imc_strdup(name);
-      i->host       = imc_strdup(host);
-      i->clientpw   = imc_strdup(pw1);
-      i->serverpw   = imc_strdup(pw2);
-      i->port       = port;
-      i->rcvstamp   = rcvstamp;
-      i->noforward  = noforward;
-      i->flags      = flags;
+      i->name = imc_strdup(name);
+      i->host = imc_strdup(host);
+      i->clientpw = imc_strdup(pw1);
+      i->serverpw = imc_strdup(pw2);
+      i->port = port;
+      i->rcvstamp = rcvstamp;
+      i->noforward = noforward;
+      i->flags = flags;
     }
     else
       imc_logerror("Bad config line: %s",
-		   buf);
+           buf);
   }
 
   if (ferror(cf))
@@ -257,11 +257,11 @@ int imc_saveconfig(void)
   }
   
   fprintf(out,
-	  "# Version <config_file_version>\n"
-	  "# LocalName <local_imc_name>\n"
-	  "# LocalPort <local_imc_port>\n"
-	  "# Connection Name:Host:Port:ClientPW:ServerPW:RcvStamp:NoForward:"
-	  "Flags\n");
+      "# Version <config_file_version>\n"
+      "# LocalName <local_imc_name>\n"
+      "# LocalPort <local_imc_port>\n"
+      "# Connection Name:Host:Port:ClientPW:ServerPW:RcvStamp:NoForward:"
+      "Flags\n");
 
   fprintf(out, "Version 1\n");
 
@@ -294,14 +294,14 @@ int imc_saveconfig(void)
   
   for (i=imc_info_list; i; i=i->next)
     fprintf(out, "Connection %s:%s:%hu:%s:%s:%d:%d:%s\n",
-	    i->name,
-	    i->host,
-	    i->port,
-	    i->clientpw,
-	    i->serverpw,
-	    i->rcvstamp,
-	    i->noforward,
-	    imc_flagname(i->flags, imc_connection_flags));
+        i->name,
+        i->host,
+        i->port,
+        i->clientpw,
+        i->serverpw,
+        i->rcvstamp,
+        i->noforward,
+        imc_flagname(i->flags, imc_connection_flags));
 
   imc_saveconfighook(out);
 
@@ -378,7 +378,7 @@ int imc_command(const char *argument)
     if (imc_name && !strcasecmp(arg2, imc_name))
     {
       imc_qerror("%s has been specified as the local mud name. Use 'imc add'"
-		 "to add connections to _other_ muds", imc_name);
+         "to add connections to _other_ muds", imc_name);
       return -1;
     }
     
@@ -390,10 +390,10 @@ int imc_command(const char *argument)
 
     i=imc_new_info();
 
-    i->name       = imc_strdup(arg2);
-    i->host       = imc_strdup("");
-    i->clientpw   = imc_strdup("");
-    i->serverpw   = imc_strdup("");
+    i->name = imc_strdup(arg2);
+    i->host = imc_strdup("");
+    i->clientpw = imc_strdup("");
+    i->serverpw = imc_strdup("");
 
     return 1;
   }
@@ -452,11 +452,11 @@ int imc_command(const char *argument)
     else if (!strcasecmp(arg3, "all"))
     {
       if (i->host)
-	imc_strfree(i->host);
+    imc_strfree(i->host);
       if (i->clientpw)
-	imc_strfree(i->clientpw);
+    imc_strfree(i->clientpw);
       if (i->serverpw)
-	imc_strfree(i->serverpw);
+    imc_strfree(i->serverpw);
 
       argument=imc_getarg(argument, arg3, IMC_DATA_LENGTH);
       i->host=imc_strdup(arg3);
@@ -480,7 +480,7 @@ int imc_command(const char *argument)
     else if (!strcasecmp(arg3, "host"))
     {
       if (i->host)
-	imc_strfree(i->host);
+    imc_strfree(i->host);
       i->host=imc_strdup(argument);
 
       imc_saveconfig();
@@ -496,7 +496,7 @@ int imc_command(const char *argument)
     else if (!strcasecmp(arg3, "clientpw"))
     {
       if (i->clientpw)
-	imc_strfree(i->clientpw);
+    imc_strfree(i->clientpw);
       i->clientpw=imc_strdup(argument);
 
       imc_saveconfig();
@@ -505,7 +505,7 @@ int imc_command(const char *argument)
     else if (!strcasecmp(arg3, "serverpw"))
     {
       if (i->serverpw)
-	imc_strfree(i->serverpw);
+    imc_strfree(i->serverpw);
       i->serverpw=imc_strdup(argument);
 
       imc_saveconfig();
@@ -588,7 +588,7 @@ int imc_command(const char *argument)
       imc_siteinfo.name=imc_strdup(argument);
 
       if (imc_active == IA_CONFIG2)
-	imc_startup_network();
+    imc_startup_network();
     }
     else if (!strcasecmp(arg2, "host"))
     {
@@ -601,7 +601,7 @@ int imc_command(const char *argument)
       imc_siteinfo.email=imc_strdup(argument);
       
       if (imc_active == IA_CONFIG2)
-	imc_startup_network();
+    imc_startup_network();
     }
     else if (!strcasecmp(arg2, "imail"))
     {
@@ -695,16 +695,16 @@ int imc_saveignores(void)
   }
 
   fprintf(out,
-	  "# IMC rignores file, one name per line, no leading spaces\n"
-	  "# types: ignore, notrust, trust\n"
-	  "# lines starting with '#' are discarded\n");
+      "# IMC rignores file, one name per line, no leading spaces\n"
+      "# types: ignore, notrust, trust\n"
+      "# lines starting with '#' are discarded\n");
 
   for (ign=imc_ignore_list; ign; ign=ign->next)
     fprintf(out, "%s%s%s %s\n",
-	    (ign->match & IMC_IGNORE_PREFIX) ? "*" : "",
-	    ign->name,
-	    (ign->match & IMC_IGNORE_SUFFIX) ? "*" : "",
-	    imc_statename(ign->type, imc_ignore_types));
+        (ign->match & IMC_IGNORE_PREFIX) ? "*" : "",
+        ign->name,
+        (ign->match & IMC_IGNORE_SUFFIX) ? "*" : "",
+        imc_statename(ign->type, imc_ignore_types));
 
   if (ferror(out))
   {
@@ -765,9 +765,9 @@ int imc_delignore(const char *what)
     if (match==ign->match && !strcasecmp(who, ign->name))
     {
       if (!last)
-	imc_ignore_list=ign->next;
+    imc_ignore_list=ign->next;
       else
-	last->next=ign->next;
+    last->next=ign->next;
 
       imc_freeignore(ign);
       return 1;
@@ -821,10 +821,10 @@ const char *imc_ignore(const char *what)
     strcpy(buf, "Current entries:\n\r");
     for (count=0, ign=imc_ignore_list; ign; ign=ign->next, count++)
       sprintf(buf + strlen(buf), " %10s   %s%s%s\n\r",
-	      imc_statename(ign->type, imc_ignore_types),
-	      (ign->match & IMC_IGNORE_PREFIX) ? "*" : "",
-	      ign->name,
-	      (ign->match & IMC_IGNORE_SUFFIX) ? "*" : "");
+          imc_statename(ign->type, imc_ignore_types),
+          (ign->match & IMC_IGNORE_PREFIX) ? "*" : "",
+          ign->name,
+          (ign->match & IMC_IGNORE_SUFFIX) ? "*" : "");
 
     if (!count)
       strcat(buf, " none");
@@ -891,16 +891,16 @@ imc_ignore_data *imc_findignore(const char *who, int type)
     {
     case 0: /* exact match */
       if (!strcasecmp(ign->name, who))
-	return ign;
+    return ign;
       break;
     case IMC_IGNORE_SUFFIX: /* abcd* */
       if (!strncasecmp(ign->name, who, len))
-	return ign;
+    return ign;
       break;
     case IMC_IGNORE_PREFIX: /* *abcd */
       wlen=strlen(who);
       if (wlen>=len && !strncasecmp(ign->name, who+wlen-len, len))
-	return ign;
+    return ign;
       break;
     case IMC_IGNORE_PREFIX|IMC_IGNORE_SUFFIX: /* *abcd* */
       if (substr(ign->name, who))
@@ -931,7 +931,7 @@ const char *imc_sockets(void)
     return "IMC is not active.\n\r";
 
   sprintf(buf, "%4s %-9s %-15s %-11s %-11s %-3s %-3s\n\r",
-	  "Desc", "Mud", "State", "Inbuf", "Outbuf", "Sp1", "Sp2");
+      "Desc", "Mud", "State", "Inbuf", "Outbuf", "Sp1", "Sp2");
 
   for (c=imc_connect_list; c; c=c->next)
   {
@@ -976,16 +976,16 @@ const char *imc_sockets(void)
 #endif
 
     sprintf(buf+strlen(buf),
-	    "%4d %-9s %-15s %5d/%-5d %5d/%-5d %3d %3d\n\r",
-	    c->desc,
-	    c->info ? c->info->name : "unknown",
-	    state,
-	    r,
-	    c->insize,
-	    s,
-	    c->outsize,
-	    c->spamcounter1,
-	    c->spamcounter2);
+        "%4d %-9s %-15s %5d/%-5d %5d/%-5d %3d %3d\n\r",
+        c->desc,
+        c->info ? c->info->name : "unknown",
+        state,
+        r,
+        c->insize,
+        s,
+        c->outsize,
+        c->spamcounter1,
+        c->spamcounter2);
   }
 
   imc_shrinksbuf(buf);
@@ -1018,14 +1018,14 @@ const char *imc_list(int level)
       break;
     case 1:
       sprintf(buf + strlen(buf), "%-10s %-30s %5s %-13s %-8s", "Name", "Host",
-	      "Port", "State", "LastConn");
+          "Port", "State", "LastConn");
       break;
     case 2:
       sprintf(buf + strlen(buf),
-	      "%-8s %-25s %5s %-13s %-10s %-10s\n"
-	      "         %-8s %-9s %-5s %-5s %-8s %s",
-	      "Name", "Host", "Port", "State", "ClientPW", "ServerPW",
-	      "RcvStamp", "NoForward", "Timer", "TimeD", "LastConn", "Flags");
+          "%-8s %-25s %5s %-13s %-10s %-10s\n"
+          "         %-8s %-9s %-5s %-5s %-8s %s",
+          "Name", "Host", "Port", "State", "ClientPW", "ServerPW",
+          "RcvStamp", "NoForward", "Timer", "TimeD", "LastConn", "Flags");
       break;
     }
     
@@ -1038,44 +1038,44 @@ const char *imc_list(int level)
       if (i->connection)
         lastconn[0]=0;
       else if (!i->last_connected)
-	strcpy(lastconn, "never");
+    strcpy(lastconn, "never");
       else
       {
-	long diff=(long)imc_now - (long)i->last_connected;
-	
-	sprintf(lastconn, "%5ld:%02ld", diff/3600, (diff/60) % 60);
+    long diff=(long)imc_now - (long)i->last_connected;
+    
+    sprintf(lastconn, "%5ld:%02ld", diff/3600, (diff/60) % 60);
       }
 
       switch (level)
       {
       case 0:
-	sprintf(buf + strlen(buf), "\n\r%-10s %-15s %8s", i->name, state, lastconn);
-	break;
+    sprintf(buf + strlen(buf), "\n\r%-10s %-15s %8s", i->name, state, lastconn);
+    break;
       case 1:
-	sprintf(buf + strlen(buf), "\n\r%-10s %-30s %5hu %-13s %8s",
-		i->name,
-		i->host,
-		i->port,
-		state,
-		lastconn);
-	break;
+    sprintf(buf + strlen(buf), "\n\r%-10s %-30s %5hu %-13s %8s",
+        i->name,
+        i->host,
+        i->port,
+        state,
+        lastconn);
+    break;
       case 2:
-	sprintf(buf + strlen(buf),
-		"\n\r%-8s %-25s %5hu %-13s %-10s %-10s"
-		"\n\r         %-8d %-9d %-5d %-5ld %8s %s",
-		i->name,
-		i->host,
-		i->port,
-		state,
-		i->clientpw,
-		i->serverpw,
-		i->rcvstamp,
-		i->noforward,
-		imc_next_event(ev_reconnect, i),
-		i->timer_duration,
-		lastconn,
-		imc_flagname(i->flags, imc_connection_flags));
-	break;
+    sprintf(buf + strlen(buf),
+        "\n\r%-8s %-25s %5hu %-13s %-10s %-10s"
+        "\n\r         %-8d %-9d %-5d %-5ld %8s %s",
+        i->name,
+        i->host,
+        i->port,
+        state,
+        i->clientpw,
+        i->serverpw,
+        i->rcvstamp,
+        i->noforward,
+        imc_next_event(ev_reconnect, i),
+        i->timer_duration,
+        lastconn,
+        imc_flagname(i->flags, imc_connection_flags));
+    break;
       }
     }
     
@@ -1088,29 +1088,29 @@ const char *imc_list(int level)
     strcpy(buf, "Active muds on IMC:\n\r");
     if (imc_is_router)
       sprintf(buf + strlen(buf), "%-10s  %-10s  %-9s  %-20s  %-10s",
-	      "Name", "Last alive", "Ping time", "IMC Version", "Route");
+          "Name", "Last alive", "Ping time", "IMC Version", "Route");
     else
       sprintf(buf + strlen(buf), "%-10s  %-10s  %-20s  %-10s",
-	      "Name", "Last alive", "IMC Version", "Route");
+          "Name", "Last alive", "IMC Version", "Route");
     
     for (p=imc_reminfo_list; p; p=p->next)
     {
       if (p->hide && level==3)
-	continue;
+    continue;
       
       if (imc_is_router)
-	if (p->ping)
-	  sprintf(buf + strlen(buf), "\n\r%-10s  %9ds  %7dms  %-20s  %-10s %s",
-		  p->name, (int) (imc_now - p->alive), p->ping, p->version,
-		  p->route ? p->route : "broadcast", p->type ? "expired" : "");
-	else
-	  sprintf(buf + strlen(buf), "\n\r%-10s  %9ds  %9s  %-20s  %-10s %s",
-		  p->name, (int) (imc_now - p->alive), "unknown", p->version,
-		  p->route ? p->route : "broadcast", p->type ? "expired" : "");
+    if (p->ping)
+      sprintf(buf + strlen(buf), "\n\r%-10s  %9ds  %7dms  %-20s  %-10s %s",
+          p->name, (int) (imc_now - p->alive), p->ping, p->version,
+          p->route ? p->route : "broadcast", p->type ? "expired" : "");
+    else
+      sprintf(buf + strlen(buf), "\n\r%-10s  %9ds  %9s  %-20s  %-10s %s",
+          p->name, (int) (imc_now - p->alive), "unknown", p->version,
+          p->route ? p->route : "broadcast", p->type ? "expired" : "");
       else
-	sprintf(buf + strlen(buf), "\n\r%-10s  %9ds  %-20s  %-10s %s",
-		p->name, (int) (imc_now - p->alive), p->version,
-		p->route ? p->route : "broadcast", p->type ? "expired" : "");
+    sprintf(buf + strlen(buf), "\n\r%-10s  %9ds  %-20s  %-10s %s",
+        p->name, (int) (imc_now - p->alive), p->version,
+        p->route ? p->route : "broadcast", p->type ? "expired" : "");
     }
 
     imc_shrinksbuf(buf);
@@ -1120,13 +1120,13 @@ const char *imc_list(int level)
   if (level==4)
   {
     sprintf(buf,
-	    "Local IMC configuration:\n\r"
-	    "  IMC name:    %s\n\r"
-	    "  IMC version: %s\n\r"
-	    "  IMC state:   %s",
-	    imc_name ? imc_name : "not set",
-	    IMC_VERSIONID,
-	    (imc_active>=IA_UP) ? "active" : "not active");
+        "Local IMC configuration:\n\r"
+        "  IMC name:    %s\n\r"
+        "  IMC version: %s\n\r"
+        "  IMC state:   %s",
+        imc_name ? imc_name : "not set",
+        IMC_VERSIONID,
+        (imc_active>=IA_UP) ? "active" : "not active");
     imc_shrinksbuf(buf);
     return buf;
   }
@@ -1134,32 +1134,32 @@ const char *imc_list(int level)
   if (level==5)
   {
     sprintf(buf,
-	    "Local IMC configuration:\n\r"
-	    "  IMC name:    %s\n\r"
-	    "  IMC port:    %hu\n\r"
-	    "  IMC version: %s\n\r"
-	    "  IMC state:   %s\n\r"
-	    "Site information:\n\r"
-	    "  Full name:   %s\n\r"
-	    "  Host/port:   %s\n\r"
-	    "  Email:       %s\n\r"
-	    "  IMC mail:    %s\n\r"
-	    "  Webpage:     %s\n\r"
-	    "  Details:     %s\n\r"
-	    "  Flags:       %s\n\r",
-	    
-	    (imc_active>=IA_CONFIG2) ? imc_name : "not set",
-	    imc_port,
-	    IMC_VERSIONID,
-	    imc_statename(imc_active, imc_active_names),
+        "Local IMC configuration:\n\r"
+        "  IMC name:    %s\n\r"
+        "  IMC port:    %hu\n\r"
+        "  IMC version: %s\n\r"
+        "  IMC state:   %s\n\r"
+        "Site information:\n\r"
+        "  Full name:   %s\n\r"
+        "  Host/port:   %s\n\r"
+        "  Email:       %s\n\r"
+        "  IMC mail:    %s\n\r"
+        "  Webpage:     %s\n\r"
+        "  Details:     %s\n\r"
+        "  Flags:       %s\n\r",
+        
+        (imc_active>=IA_CONFIG2) ? imc_name : "not set",
+        imc_port,
+        IMC_VERSIONID,
+        imc_statename(imc_active, imc_active_names),
 
-	    imc_siteinfo.name,
-	    imc_siteinfo.host,
-	    imc_siteinfo.email,
-	    imc_siteinfo.imail,
-	    imc_siteinfo.www,
-	    imc_siteinfo.details,
-	    imc_siteinfo.flags);
+        imc_siteinfo.name,
+        imc_siteinfo.host,
+        imc_siteinfo.email,
+        imc_siteinfo.imail,
+        imc_siteinfo.www,
+        imc_siteinfo.details,
+        imc_siteinfo.flags);
     
     imc_shrinksbuf(buf);
     return buf;
@@ -1180,29 +1180,29 @@ const char *imc_getstats(void)
     ;
 
   sprintf(buf,
-	  "IMC statistics\n\r"
-	  "\n\r"
-	  "Received packets:    %ld\n\r"
-	  "Received bytes:      %ld (%ld/second)\n\r"
-	  "Transmitted packets: %ld\n\r"
-	  "Transmitted bytes:   %ld (%ld/second)\n\r"
-	  "Maximum packet size: %d\n\r"
-	  "Pending events:      %d\n\r"
-	  "Sequence drops:      %d\n\r",
+      "IMC statistics\n\r"
+      "\n\r"
+      "Received packets:    %ld\n\r"
+      "Received bytes:      %ld (%ld/second)\n\r"
+      "Transmitted packets: %ld\n\r"
+      "Transmitted bytes:   %ld (%ld/second)\n\r"
+      "Maximum packet size: %d\n\r"
+      "Pending events:      %d\n\r"
+      "Sequence drops:      %d\n\r",
 
-	  imc_stats.rx_pkts,
-	  imc_stats.rx_bytes,
-	  imc_stats.rx_bytes /
-	  ((imc_now - imc_stats.start) ?
-	   (imc_now - imc_stats.start) : 1),
-	  imc_stats.tx_pkts,
-	  imc_stats.tx_bytes,
-	  imc_stats.tx_bytes /
-	  ((imc_now - imc_stats.start) ?
-	   (imc_now - imc_stats.start) : 1),
-	  imc_stats.max_pkt,
-	  evcount,
-	  imc_stats.sequence_drops);
+      imc_stats.rx_pkts,
+      imc_stats.rx_bytes,
+      imc_stats.rx_bytes /
+      ((imc_now - imc_stats.start) ?
+       (imc_now - imc_stats.start) : 1),
+      imc_stats.tx_pkts,
+      imc_stats.tx_bytes,
+      imc_stats.tx_bytes /
+      ((imc_now - imc_stats.start) ?
+       (imc_now - imc_stats.start) : 1),
+      imc_stats.max_pkt,
+      evcount,
+      imc_stats.sequence_drops);
 
   imc_shrinksbuf(buf);
   return buf;

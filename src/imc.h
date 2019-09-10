@@ -74,8 +74,8 @@
 /* flag/state tables */
 typedef struct
 {
-  char *name;			/* flag name */
-  int value;			/* bit value */
+  char *name;            /* flag name */
+  int value;            /* bit value */
 } imc_flag_type;
 
 /* data in an IMC packet */
@@ -88,10 +88,10 @@ typedef struct
 /* an IMC packet, as seen by the high-level code */
 typedef struct
 {
-  char to[IMC_NAME_LENGTH];	/* destination of packet */
-  char from[IMC_NAME_LENGTH];	/* source of packet      */
-  char type[IMC_TYPE_LENGTH];	/* type of packet        */
-  imc_data data;		/* data of packet        */
+  char to[IMC_NAME_LENGTH];    /* destination of packet */
+  char from[IMC_NAME_LENGTH];    /* source of packet      */
+  char type[IMC_TYPE_LENGTH];    /* type of packet        */
+  imc_data data;        /* data of packet        */
 
   /* internal things which only the low-level code needs to know about */
   struct {
@@ -108,18 +108,18 @@ typedef struct _imc_connect
 {
   struct _imc_info *info;       /* imc_info struct for this connection */
 
-  int desc;			/* descriptor */
-  unsigned short state;	      	/* IMC_xxxx state */
-  unsigned short version;      	/* version of remote site */
+  int desc;            /* descriptor */
+  unsigned short state;              /* IMC_xxxx state */
+  unsigned short version;          /* version of remote site */
 
   short newoutput;              /* try to write at end of cycle regardless
-				 * of fd_set state?
-				 */
+                 * of fd_set state?
+                 */
   
-  char *inbuf;		        /* input buffer */
+  char *inbuf;                /* input buffer */
   int insize;
 
-  char *outbuf;		        /* output buffer */
+  char *outbuf;                /* output buffer */
   int outsize;
 
   int spamcounter1;             /* packet counters since last update */
@@ -133,15 +133,15 @@ typedef struct _imc_connect
 /* a configured IMC connection */
 typedef struct _imc_info
 {
-  char *name;			/* name of remote mud */
-  char *host;			/* hostname */
+  char *name;            /* name of remote mud */
+  char *host;            /* hostname */
 
   struct _imc_connect *connection;
 
-  unsigned short port;		/* remote port */
-  char *serverpw;		/* server password */
-  char *clientpw;		/* client password */
-  int flags;			/* connection flags */
+  unsigned short port;        /* remote port */
+  char *serverpw;        /* server password */
+  char *clientpw;        /* client password */
+  int flags;            /* connection flags */
   time_t timer_duration;        /* delay after next reconnect failure */
 
   int rcvstamp;                 /* packets get this stamp on arrival */
@@ -156,12 +156,12 @@ typedef struct _imc_info
 /* IMC statistics */
 typedef struct
 {
-  time_t start;		        /* when statistics started */
+  time_t start;                /* when statistics started */
   
-  long rx_pkts;		        /* received packets */
-  long tx_pkts;		        /* transmitted packets */
-  long rx_bytes;		/* received bytes */
-  long tx_bytes;		/* transmitted bytes */
+  long rx_pkts;                /* received packets */
+  long tx_pkts;                /* transmitted packets */
+  long rx_bytes;        /* received bytes */
+  long tx_bytes;        /* transmitted bytes */
 
   int max_pkt;                  /* max. size packet processed */
   int sequence_drops;           /* dropped packets due to age */
@@ -221,23 +221,23 @@ typedef struct _imc_ignore_data
 /* a player on IMC */
 typedef struct
 {
-  char name[IMC_NAME_LENGTH];	/* name of character */
-  int invis;			/* invisible to IMC? */
-  int level;			/* trust level */
-  int wizi;			/* wizi level */
+  char name[IMC_NAME_LENGTH];    /* name of character */
+  int invis;            /* invisible to IMC? */
+  int level;            /* trust level */
+  int wizi;            /* wizi level */
 } imc_char_data;
 
 /* one piece of mail */
 typedef struct _imc_mail
 {
-  char *from;			/* 'from' line */
-  char *to;			/* 'to' line */
-  char *text;			/* text of the mail */
-  char *date;			/* 'date' line */
-  char *subject;		/* 'subject' line */
-  char *id;			/* mail ID (should be unique among mails) */
-  time_t received;		/* when it was received (into the queue) */
-  int usage;			/* number of references to this mail */
+  char *from;            /* 'from' line */
+  char *to;            /* 'to' line */
+  char *text;            /* text of the mail */
+  char *date;            /* 'date' line */
+  char *subject;        /* 'subject' line */
+  char *id;            /* mail ID (should be unique among mails) */
+  time_t received;        /* when it was received (into the queue) */
+  int usage;            /* number of references to this mail */
   struct _imc_mail *next;
 } imc_mail;
 
@@ -252,8 +252,8 @@ typedef struct _imc_qnode
 /* a mail ID that has been received */
 typedef struct _imc_mailid
 {
-  char *id;			/* message-id */
-  time_t received;		/* when received */
+  char *id;            /* message-id */
+  time_t received;        /* when received */
   struct _imc_mailid *next;
 } imc_mailid;
 
@@ -458,13 +458,13 @@ void imc_strfree(char *str);
 void imc_sendignore(const char *to);
 
 void imc_send_chat(const imc_char_data *from, int channel,
-		   const char *argument, const char *to);
+           const char *argument, const char *to);
 void imc_send_emote(const imc_char_data *from, int channel,
-		    const char *argument, const char *to);
+            const char *argument, const char *to);
 void imc_send_tell(const imc_char_data *from, const char *to,
-		   const char *argument, int isreply);
+           const char *argument, int isreply);
 void imc_send_who(const imc_char_data *from, const char *to,
-		  const char *type);
+          const char *type);
 void imc_send_whoreply(const char *to, const char *data, int sequence);
 void imc_send_whois(const imc_char_data *from, const char *to);
 void imc_send_whoisreply(const char *to, const char *data);
@@ -482,11 +482,11 @@ void imc_whoreply_end(void);
 /* callbacks that need to be provided by the interface layer */
 
 void imc_recv_chat(const imc_char_data *from, int channel,
-		   const char *argument);
+           const char *argument);
 void imc_recv_emote(const imc_char_data *from, int channel,
-		    const char *argument);
+            const char *argument);
 void imc_recv_tell(const imc_char_data *from, const char *to,
-		   const char *argument, int isreply);
+           const char *argument, int isreply);
 void imc_recv_whoreply(const char *to, const char *data, int sequence);
 void imc_recv_who(const imc_char_data *from, const char *type);
 void imc_recv_beep(const imc_char_data *from, const char *to);
@@ -534,12 +534,12 @@ void imc_saveconfighook(FILE *fp);
 void imc_recv_mailok(const char *from, const char *id);
 void imc_recv_mailrej(const char *from, const char *id, const char *reason);
 void imc_recv_mail(const char *from, const char *to, const char *date,
-		   const char *subject, const char *id, const char *text);
+           const char *subject, const char *id, const char *text);
 void imc_send_mail(const char *from, const char *to, const char *date,
-		   const char *subject, const char *text);
+           const char *subject, const char *text);
 
 char *imc_mail_arrived(const char *from, const char *to, const char *date,
-		       const char *subject, const char *text);
+               const char *subject, const char *text);
 
 void imc_mail_startup(void);
 void imc_mail_shutdown(void);

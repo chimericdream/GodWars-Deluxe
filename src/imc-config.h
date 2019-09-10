@@ -166,7 +166,7 @@ do {                                        \
   char *d=(char *)(dest), *s=(char *)(src); \
   int sz=(size);                            \
   if (d<s)                                  \
-    for ( ; sz; --sz)                       \
+    for (; sz; --sz)                       \
       *d++=*s++;                            \
   else                                      \
     for (s+=sz,d+=sz; sz; --sz)             \

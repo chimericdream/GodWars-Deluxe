@@ -137,10 +137,10 @@ static void parsekeys(const char *string, imc_data * data)
       *p2++=*p1++;
     *p2=0;
 
-    if (!k[0] || !*p1)		/* no more keys? */
+    if (!k[0] || !*p1)        /* no more keys? */
       break;
 
-    p1++;			/* skip the '=' */
+    p1++;            /* skip the '=' */
 
     if (*p1 == '"')
     {
@@ -152,33 +152,33 @@ static void parsekeys(const char *string, imc_data * data)
 
     p2=v;
     while (*p1 && (!quote || *p1 != '"') && (quote || *p1 != ' ') &&
-	   p2-v < IMC_DATA_LENGTH+1)
+       p2-v < IMC_DATA_LENGTH+1)
     {
       if (*p1 == '\\')
       {
-	switch (*(++p1))
-	{
-	case '\\':
-	  *p2++='\\';
-	  break;
-	case 'n':
-	  *p2++='\n';
-	  break;
-	case 'r':
-	  *p2++='\r';
-	  break;
-	case '"':
-	  *p2++='"';
-	  break;
-	default:
-	  *p2++=*p1;
-	  break;
-	}
-	if (*p1)
-	  p1++;
+    switch (*(++p1))
+    {
+    case '\\':
+      *p2++='\\';
+      break;
+    case 'n':
+      *p2++='\n';
+      break;
+    case 'r':
+      *p2++='\r';
+      break;
+    case '"':
+      *p2++='"';
+      break;
+    default:
+      *p2++=*p1;
+      break;
+    }
+    if (*p1)
+      p1++;
       }
       else
-	*p2++=*p1++;
+    *p2++=*p1++;
     }
 
     *p2=0;
@@ -201,7 +201,7 @@ static const char *generate2(const imc_packet * p)
   if (!p->type[0] || !p->i.from[0] || !p->i.to[0])
   {
     imc_logerror("BUG: generate2: bad packet!");
-    return NULL;		/* catch bad packets here */
+    return NULL;        /* catch bad packets here */
   }
 
   if (!p->i.path[0])
@@ -211,8 +211,8 @@ static const char *generate2(const imc_packet * p)
 
   temp=imc_getsbuf(IMC_PACKET_LENGTH);
   sprintf(temp, "%s %lu %s %s %s %s",
-	  p->i.from, p->i.sequence, newpath, p->type, p->i.to,
-	  printkeys(&p->data));
+      p->i.from, p->i.sequence, newpath, p->type, p->i.to,
+      printkeys(&p->data));
   imc_shrinksbuf(temp);
   return temp;
 }

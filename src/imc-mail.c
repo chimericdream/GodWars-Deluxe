@@ -86,17 +86,17 @@ static const char *unescape(const char *data)
       switch (ch)
       {
       case 'n':
-	*p='\n';
-	break;
+    *p='\n';
+    break;
       case 'r':
-	*p='\r';
-	break;
+    *p='\r';
+    break;
       case '\\':
-	*p='\\';
-	break;
+    *p='\\';
+    break;
       default:
-	*p=ch;
-	break;
+    *p=ch;
+    break;
       }
     }
     else
@@ -122,15 +122,15 @@ static imc_mail *new_mail(void)
 
   p=imc_malloc(sizeof(*p));
 
-  p->from     = NULL;
-  p->to       = NULL;
-  p->subject  = NULL;
-  p->date     = NULL;
-  p->text     = NULL;
-  p->id       = NULL;
+  p->from = NULL;
+  p->to = NULL;
+  p->subject = NULL;
+  p->date = NULL;
+  p->text = NULL;
+  p->id = NULL;
   p->received = 0;
-  p->usage    = 0;
-  p->next     = NULL;
+  p->usage = 0;
+  p->next = NULL;
 
   return p;
 }
@@ -147,7 +147,7 @@ static void free_mail(imc_mail *p)
   if (p->usage)
   {
     imc_logerror("BUG: free_mail: freeing mail at %p with usage=%d",
-		 p, p->usage);
+         p, p->usage);
     return;
   }
 
@@ -235,13 +235,13 @@ imc_mail *imc_ml_head;
 /* init_ml: init the maillist */
 static void init_ml(void)
 {
-  imc_ml_head          = new_mail();
-  imc_ml_head->to      = imc_strdup("");
-  imc_ml_head->from    = imc_strdup("");
-  imc_ml_head->date    = imc_strdup("");
+  imc_ml_head = new_mail();
+  imc_ml_head->to = imc_strdup("");
+  imc_ml_head->from = imc_strdup("");
+  imc_ml_head->date = imc_strdup("");
   imc_ml_head->subject = imc_strdup("");
-  imc_ml_head->text    = imc_strdup("");
-  imc_ml_head->id      = imc_strdup("");
+  imc_ml_head->text = imc_strdup("");
+  imc_ml_head->id = imc_strdup("");
 }
 
 /* free_ml: free the maillist */
@@ -379,8 +379,8 @@ static imc_qnode *new_qnode(void)
 
   p=imc_malloc(sizeof(*p));
 
-  p->data  = NULL;
-  p->next  = NULL;
+  p->data = NULL;
+  p->next = NULL;
   p->tomud = NULL;
 
   return p;
@@ -441,7 +441,7 @@ static imc_qnode *read_qnode(FILE *in)
   p=new_qnode();
 
   m->usage++;
-  p->data  = m;
+  p->data = m;
   p->tomud = imc_strdup(temp2);
 
   return p;
@@ -457,8 +457,8 @@ imc_qnode *imc_mq_head, *imc_mq_tail;
 /* init_mq: init mailqueue */
 static void init_mq(void)
 {
-  imc_mq_head       = new_qnode();
-  imc_mq_tail       = imc_mq_head;
+  imc_mq_head = new_qnode();
+  imc_mq_tail = imc_mq_head;
   imc_mq_head->data = NULL;
   imc_mq_head->next = NULL;
 }
@@ -492,7 +492,7 @@ static imc_qnode *get_mq(void)
 {
   imc_qnode *p;
 
-  if (imc_mq_head == imc_mq_tail)	/* empty queue */
+  if (imc_mq_head == imc_mq_tail)    /* empty queue */
     return NULL;
 
   p=imc_mq_head->next;
@@ -500,7 +500,7 @@ static imc_qnode *get_mq(void)
   if (p == imc_mq_tail)
     imc_mq_tail=imc_mq_head;
 
-  p->next=NULL;	                        /* Just In Case */
+  p->next=NULL;                            /* Just In Case */
 
   return p;
 }
@@ -528,7 +528,7 @@ static void delete_mq(const char *id, const char *tomud)
     {
       last->next=p->next;
       if (p == imc_mq_tail)
-	imc_mq_tail=last;
+    imc_mq_tail=last;
       free_qnode(p);
       return;
     }
@@ -602,9 +602,9 @@ static imc_mailid *new_mailid(void)
 
   p=imc_malloc(sizeof(*p));
 
-  p->id       = NULL;
+  p->id = NULL;
   p->received = 0;
-  p->next     = NULL;
+  p->next = NULL;
 
   return p;
 }
@@ -658,7 +658,7 @@ static imc_mailid *read_mailid(FILE *in)
 
   p=new_mailid();
 
-  p->id       = imc_strdup(temp);
+  p->id = imc_strdup(temp);
   p->received = r;
 
   return p;
@@ -719,7 +719,7 @@ static void flush_idlist(time_t at)
   imc_mailid *p, *last;
 
   for (last=imc_idlist, p=last->next; p; p=p->next)
-    if (p->received < at)	/* delete this entry */
+    if (p->received < at)    /* delete this entry */
     {
       last->next=p->next;
       free_mailid(p);
@@ -793,20 +793,20 @@ static void bounce(imc_mail *item, const char *source, const char *reason)
   char temp[IMC_DATA_LENGTH];
 
   sprintf(temp,
-	  "Your mail of %s:\n\r"
-	  " to: %s\n\r"
-	  " re: %s\n\r"
-	  "was undeliverable for the following reason:\n\r"
-	  "\n\r"
-	  "%s: %s\n\r",
-	  item->date,
-	  item->to,
-	  item->subject,
-	  source,
-	  reason);
+      "Your mail of %s:\n\r"
+      " to: %s\n\r"
+      " re: %s\n\r"
+      "was undeliverable for the following reason:\n\r"
+      "\n\r"
+      "%s: %s\n\r",
+      item->date,
+      item->to,
+      item->subject,
+      source,
+      reason);
 
   imc_mail_arrived("Mail-daemon", imc_nameof(item->from), datestring(),
-		   "Bounced mail", temp);
+           "Bounced mail", temp);
 }
 
 /* expire old entries in the mailid list; called once an hour */
@@ -866,7 +866,7 @@ void imc_recv_mailok(const char *from, const char *id)
 {
   delete_mq(id, imc_mudof(from));
   save_mq();
-  save_ml();	       	/* we might have removed the mail if usage==0 */
+  save_ml();               /* we might have removed the mail if usage==0 */
 }
 
 /* imc_recv_mailrej: a mail-reject packet was received */
@@ -936,7 +936,7 @@ static void mudtoaddr(const char *list, char *output)
 /* imc_recv_mail: a mail packet was received */
 
 void imc_recv_mail(const char *from, const char *to, const char *date,
-		   const char *subject, const char *id, const char *text)
+           const char *subject, const char *id, const char *text)
 {
   imc_mailid *mid;
   imc_packet out;
@@ -1012,7 +1012,7 @@ void imc_recv_mail(const char *from, const char *to, const char *date,
 
 /* imc_send_mail: called by the mud to add a piece of mail to the queue */
 void imc_send_mail(const char *from, const char *to, const char *date,
-		   const char *subject, const char *text)
+           const char *subject, const char *text)
 {
   char temp[IMC_DATA_LENGTH];
   imc_mail *m;
@@ -1025,17 +1025,17 @@ void imc_send_mail(const char *from, const char *to, const char *date,
 
   m=new_mail();
 
-  mudtoaddr(to, temp);		/* qualify local addresses */
-  m->to       = imc_strdup(temp);
-  sprintf(temp, "%s@%s", from, imc_name);	/* qualify sender */
-  m->from     = imc_strdup(temp);
-  m->date     = imc_strdup(date);
-  m->subject  = imc_strdup(subject);
-  m->id       = imc_strdup(generate_mailid());
-  m->text     = imc_strdup(text);
+  mudtoaddr(to, temp);        /* qualify local addresses */
+  m->to = imc_strdup(temp);
+  sprintf(temp, "%s@%s", from, imc_name);    /* qualify sender */
+  m->from = imc_strdup(temp);
+  m->date = imc_strdup(date);
+  m->subject = imc_strdup(subject);
+  m->id = imc_strdup(generate_mailid());
+  m->text = imc_strdup(text);
   m->received = imc_now;
 
-  qroot=NULL;			/* initialise the local list */
+  qroot=NULL;            /* initialise the local list */
   to=imc_getarg(to, arg, IMC_NAME_LENGTH);
 
   while (*arg)
@@ -1045,26 +1045,26 @@ void imc_send_mail(const char *from, const char *to, const char *date,
      */
 
     if (strchr(arg, '@') != NULL && (mud = imc_mudof(arg))[0] != 0 &&
-	strcasecmp(mud, imc_name))
+    strcasecmp(mud, imc_name))
     {
       if (!strcmp(mud, "*"))
-	q=NULL;	                /* catch the @* case - not yet implemented */
+    q=NULL;                    /* catch the @* case - not yet implemented */
       else
-	for (q=qroot; q; q=q->next)
-	  if (!strcasecmp(q->tomud, mud))
-	    break;
+    for (q=qroot; q; q=q->next)
+      if (!strcasecmp(q->tomud, mud))
+        break;
 
-      if (!q)			/* not seen yet */
-      {				/* add to the top of our mini-queue */
-	q=new_qnode();
-	q->tomud=imc_strdup(mud);
-	q->data=m;
-	q->next=qroot;
-	m->usage++;
-	qroot=q;
+      if (!q)            /* not seen yet */
+      {                /* add to the top of our mini-queue */
+    q=new_qnode();
+    q->tomud=imc_strdup(mud);
+    q->data=m;
+    q->next=qroot;
+    m->usage++;
+    qroot=q;
 
-	imc_add_event(when, ev_qnode_send, q, 1);
-	when += rand()%30+30;
+    imc_add_event(when, ev_qnode_send, q, 1);
+    when += rand()%30+30;
       }
     }
 
@@ -1073,7 +1073,7 @@ void imc_send_mail(const char *from, const char *to, const char *date,
     to=imc_getarg(to, arg, IMC_NAME_LENGTH);
   }
 
-  if (!qroot)			/* boggle, no foreign addresses?? */
+  if (!qroot)            /* boggle, no foreign addresses?? */
   {
     free_mail(m);
     return;
@@ -1140,20 +1140,20 @@ char *imc_mail_showqueue(void)
     m=imc_next_event(ev_qnode_send, p);
     if (m<0)
       sprintf(temp, "%-15.15s %-45.45s %-10.10s --:--\n\r",
-	      p->data->from,
-	      p->data->to,
-	      p->tomud);
+          p->data->from,
+          p->data->to,
+          p->tomud);
     else      
     {
       s=m%60;
       m/=60;
       sprintf(temp, "%-15.15s %-45.45s %-10.10s %2d:%02d\n\r",
-	      p->data->from,
-	      p->data->to,
-	      p->tomud,
-	      m, s);
+          p->data->from,
+          p->data->to,
+          p->tomud,
+          m, s);
     }
-	      
+          
     left -= strlen(temp);
     strcat(buf, temp);
   }

@@ -54,10 +54,10 @@ int ice_audible(ice_channel *c, const char *who)
     while (arg[0])
     {
       if (!strcasecmp(who, arg) ||
-	  !strcasecmp(who, imc_mudof(arg)))
+      !strcasecmp(who, imc_mudof(arg)))
       {
-	invited=1;
-	break;
+    invited=1;
+    break;
       }
       
       p=imc_getarg(p, arg, IMC_NAME_LENGTH);
@@ -70,9 +70,9 @@ int ice_audible(ice_channel *c, const char *who)
     while (arg[0])
     {
       if (!strcasecmp(who, arg) ||
-	  !strcasecmp(who, imc_mudof(arg)))
+      !strcasecmp(who, imc_mudof(arg)))
         return 0;
-	
+    
       p=imc_getarg(p, arg, IMC_NAME_LENGTH);
     }
 
@@ -94,9 +94,9 @@ int ice_audible(ice_channel *c, const char *who)
     /* open policy. default yes. override with excludes, then invites */
     
     if ((imc_hasname(c->excluded, who) ||
-	 imc_hasname(c->excluded, imc_mudof(who))) &&
-	!imc_hasname(c->invited, who) &&
-	!imc_hasname(c->invited, imc_mudof(who)))
+     imc_hasname(c->excluded, imc_mudof(who))) &&
+    !imc_hasname(c->invited, who) &&
+    !imc_hasname(c->invited, imc_mudof(who)))
       return 0;
     else
       return 1;

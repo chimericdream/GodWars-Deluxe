@@ -232,14 +232,14 @@ char *getstats(void)
       found++;
       i=imc_find_reminfo(c->info->name, 0);
       if (i && i->ping)
-	sprintf(buf1, " [%4dms] %s@%s\n\r",
-		i->ping,
-		c->info->name,
-		c->info->host);
+    sprintf(buf1, " [%4dms] %s@%s\n\r",
+        i->ping,
+        c->info->name,
+        c->info->host);
       else
-	sprintf(buf1, " [????ms] %s@%s\n\r",
-		c->info->name,
-		c->info->host);
+    sprintf(buf1, " [????ms] %s@%s\n\r",
+        c->info->name,
+        c->info->host);
       strcat(buf, buf1);
     }
   }
@@ -305,8 +305,8 @@ void imc_recv_who(const imc_char_data *from, const char *type)
     imc_send_whoreply(from->name, getstats(), -1);
   else if (!strcasecmp(arg, "info"))
     imc_send_whoreply(from->name,
-		      "This is a stand-alone IMC router based on router.c.\n\r"
-		      "It is administered by " EMAIL "\n\r", -1);
+              "This is a stand-alone IMC router based on router.c.\n\r"
+              "It is administered by " EMAIL "\n\r", -1);
   else if (!strcasecmp(arg, "direct"))
     imc_send_whoreply(from->name, imc_list(0), -1);
   else if (!strcasecmp(arg, "list"))
@@ -316,19 +316,19 @@ void imc_recv_who(const imc_char_data *from, const char *type)
   else if (!strcasecmp(arg, "istats"))
     imc_send_whoreply(from->name, imc_getstats(), -1);
   else if (!strcasecmp(arg, "help") || !strcasecmp(arg, "services") ||
-	   !strcasecmp(arg, "help"))
+       !strcasecmp(arg, "help"))
     imc_send_whoreply(from->name,
-		      "Available rquery types:\n\r"
-		      "help       - this list\n\r"
-		      "who        - active muds on IMC\n\r"
-		      "info       - router information\n\r"
-		      "list       - list known muds on IMC\n\r"
-		      "direct     - list directly connected muds\n\r"
-		      "config     - show local configuration\n\r"
-		      "istats     - IMC statistics\n\r", -1);
+              "Available rquery types:\n\r"
+              "help       - this list\n\r"
+              "who        - active muds on IMC\n\r"
+              "info       - router information\n\r"
+              "list       - list known muds on IMC\n\r"
+              "direct     - list directly connected muds\n\r"
+              "config     - show local configuration\n\r"
+              "istats     - IMC statistics\n\r", -1);
   else
     imc_send_whoreply(from->name,
-		      "Sorry, no information of that type is available", -1);
+              "Sorry, no information of that type is available", -1);
 }
 
 void imc_recv_tell(const imc_char_data *from, const char *to, const char *text,
@@ -373,7 +373,7 @@ void imc_traceroute(int ping, const char *pathto, const char *pathfrom)
 }
 
 char *imc_mail_arrived(const char *from, const char *to, const char *date,
-		       const char *subject, const char *text)
+               const char *subject, const char *text)
 {
   char *buf=imc_getsbuf(200);
   sprintf(buf, "%s is a router only, and does not accept mail.", imc_name);

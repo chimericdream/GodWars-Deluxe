@@ -78,12 +78,12 @@ void icec_save_channels(void)
 
     /* save */
     fprintf(fp,
-	    "%s %s %d\n"
-	    "%s\n"
-	    "%s\n",
-	    c->name, c->local->name, c->local->level,
-	    c->local->format1,
-	    c->local->format2);
+        "%s %s %d\n"
+        "%s\n"
+        "%s\n",
+        c->name, c->local->name, c->local->level,
+        c->local->format1,
+        c->local->format2);
   }
 
   fclose(fp);
@@ -110,9 +110,9 @@ void icec_load_channels(void)
   }
 
   while (fscanf(fp,
-		"%s %s %d\n"
-		"%[^\n]\n"
-		"%[^\n]\n", buf1, buf2, &l, buf3, buf4) == 5)
+        "%s %s %d\n"
+        "%[^\n]\n"
+        "%[^\n]\n", buf1, buf2, &l, buf3, buf4) == 5)
   {
     ice_channel *c=imc_malloc(sizeof(*c));
 
@@ -128,7 +128,7 @@ void icec_load_channels(void)
     saved_channel_list=c;
 
     imc_logstring("ICEc: configured %s as %s",
-		  c->name, c->local->name);
+          c->name, c->local->name);
   }
 
   fclose(fp);
@@ -289,13 +289,13 @@ DEFINE_DO_FUN(do_isetup)
     {
       if (!strcasecmp(saved->local->name, c->local->name))
       {
-	icec_localfree(saved);
-	imc_strfree(saved->name);
-	*last=saved->next;
-	imc_free(saved, sizeof(*saved));
+    icec_localfree(saved);
+    imc_strfree(saved->name);
+    *last=saved->next;
+    imc_free(saved, sizeof(*saved));
       }
       else
-	last=&saved->next;
+    last=&saved->next;
     }
     
     icec_localfree(c);
@@ -393,7 +393,7 @@ DEFINE_DO_FUN(do_isetup)
   }
 
   send_to_char("Unknown command.\n\r"
-	       "Available commands: add delete rename format1 format2 level.\n\r", ch);
+           "Available commands: add delete rename format1 format2 level.\n\r", ch);
 }
 
 DEFINE_DO_FUN(do_ilist)
@@ -414,32 +414,32 @@ DEFINE_DO_FUN(do_ilist)
     }
 
     sprintf(buf,
-	    "Channel %s:\n"
-	    "  Local name: %s\n"
-	    "  Format 1:   %s\n"
-	    "  Format 2:   %s\n"
-	    "  Level:      %d\n"
-	    "\n"
-	    "  Policy:     %s\n"
-	    "  Owner:      %s\n"
-	    "  Operators:  %s\n"
-	    "  Invited:    %s\n"
-	    "  Excluded:   %s\n",
+        "Channel %s:\n"
+        "  Local name: %s\n"
+        "  Format 1:   %s\n"
+        "  Format 2:   %s\n"
+        "  Level:      %d\n"
+        "\n"
+        "  Policy:     %s\n"
+        "  Owner:      %s\n"
+        "  Operators:  %s\n"
+        "  Invited:    %s\n"
+        "  Excluded:   %s\n",
 
-	    c->name,
+        c->name,
 
-	    c->local ? c->local->name : "",
-	    c->local ? c->local->format1 : "",
-	    c->local ? c->local->format2 : "",
-	    c->local ? c->local->level : 0,
+        c->local ? c->local->name : "",
+        c->local ? c->local->format1 : "",
+        c->local ? c->local->format2 : "",
+        c->local ? c->local->level : 0,
 
-	    c->policy == ICE_OPEN ? "open" :
-	    c->policy == ICE_CLOSED ? "closed" : "private",
+        c->policy == ICE_OPEN ? "open" :
+        c->policy == ICE_CLOSED ? "closed" : "private",
 
-	    c->owner,
-	    c->operators,
-	    c->invited,
-	    c->excluded);
+        c->owner,
+        c->operators,
+        c->invited,
+        c->excluded);
     send_to_char(buf, ch);
     return;
   }
@@ -449,11 +449,11 @@ DEFINE_DO_FUN(do_ilist)
   for (c=icec_channel_list; c; c=c->next)
   {
     sprintf(buf+strlen(buf), "%-15s %-15s %-15s %s\n\r",
-	    c->name,
-	    c->local ? c->local->name : "(not local)",
-	    c->owner,
-	    c->policy == ICE_OPEN ? "open" :
-	    c->policy == ICE_CLOSED ? "closed" : "private");
+        c->name,
+        c->local ? c->local->name : "(not local)",
+        c->owner,
+        c->policy == ICE_OPEN ? "open" :
+        c->policy == ICE_CLOSED ? "closed" : "private");
   }
 
   for (c=saved_channel_list; c; c=c->next)
@@ -461,9 +461,9 @@ DEFINE_DO_FUN(do_ilist)
     if (!icec_findchannel(c->name))
     {
       sprintf(buf+strlen(buf), "%-15s %-15s %-15s %-7s  (inactive)\n\r",
-	      c->name,
-	      c->local ? c->local->name : "(not local)",
-	      "", "");
+          c->name,
+          c->local ? c->local->name : "(not local)",
+          "", "");
     }
   }
 
@@ -497,7 +497,7 @@ DEFINE_DO_FUN(do_ichannels)
       send_to_char("No such channel configured locally.\n\r", ch);
       return;
     }
-	
+    
     imc_addname(&ch->pcdata->ice_listen, arg);
     send_to_char("Added.\n\r", ch);
   }
@@ -522,10 +522,10 @@ void icec_showchannel(ice_channel *c, const char *from, const char *txt, int emo
     ch=d->original ? d->original : d->character;
 
     if (!ch ||
-	IS_NPC(ch) ||
-	get_trust(ch) < c->local->level ||
-	!ice_audible(c, imc_makename(ch->name, imc_name)) ||
-	!imc_hasname(ch->pcdata->ice_listen, c->local->name))
+    IS_NPC(ch) ||
+    get_trust(ch) < c->local->level ||
+    !ice_audible(c, imc_makename(ch->name, imc_name)) ||
+    !imc_hasname(ch->pcdata->ice_listen, c->local->name))
       continue;
 
     send_to_char(buf, ch);
@@ -592,13 +592,13 @@ void icec_notify_update(ice_channel *c)
     for (saved=saved_channel_list; saved; saved=saved->next)
       if (!strcasecmp(saved->name, c->name))
       {
-	c->local=imc_malloc(sizeof(icec_lchannel));
-	c->local->name=imc_strdup(saved->local->name);
-	c->local->format1=imc_strdup(saved->local->format1);
-	c->local->format2=imc_strdup(saved->local->format2);
-	c->local->level=saved->local->level;
+    c->local=imc_malloc(sizeof(icec_lchannel));
+    c->local->name=imc_strdup(saved->local->name);
+    c->local->format1=imc_strdup(saved->local->format1);
+    c->local->format2=imc_strdup(saved->local->format2);
+    c->local->level=saved->local->level;
 
-	return;
+    return;
       }
   }
 }

@@ -54,7 +54,7 @@ void imc_recv_keepalive(const char *from, const char *version, const char *flags
    *  code)
    */
   p=imc_find_reminfo(from, 0);
-  if (!p)		    /* boggle */
+  if (!p)            /* boggle */
     return;
 
   if (imc_hasname(flags, "hide"))
@@ -94,7 +94,7 @@ void imc_recv_pingreply(const char *from, int time_s, int time_u, const char *pa
   struct timeval tv;
 
   p = imc_find_reminfo(from, 0);   /* should always exist */
-  if (!p)			   /* boggle */
+  if (!p)               /* boggle */
     return;
 
   gettimeofday(&tv, NULL);      /* grab the exact time now and calc RTT */
@@ -180,12 +180,12 @@ void imc_recv(const imc_packet *p)
   /* chat: message to a channel (broadcast) */
   if (!strcasecmp(p->type, "chat") && !imc_isignored(p->from))
     imc_recv_chat(&d, imc_getkeyi(&p->data, "channel", 0),
-		  imc_getkey(&p->data, "text", ""));
+          imc_getkey(&p->data, "text", ""));
 
   /* emote: emote to a channel (broadcast) */
   else if (!strcasecmp(p->type, "emote") && !imc_isignored(p->from))
     imc_recv_emote(&d, imc_getkeyi(&p->data, "channel", 0),
-		   imc_getkey(&p->data, "text", ""));
+           imc_getkey(&p->data, "text", ""));
 
   /* tell: tell a player here something */
   else if (!strcasecmp(p->type, "tell"))
@@ -193,12 +193,12 @@ void imc_recv(const imc_packet *p)
       imc_sendignore(p->from);
     else
       imc_recv_tell(&d, p->to, imc_getkey(&p->data, "text", ""),
-		    imc_getkeyi(&p->data, "isreply", 0));
+            imc_getkeyi(&p->data, "isreply", 0));
 
   /* who-reply: receive a who response */
   else if (!strcasecmp(p->type, "who-reply"))
     imc_recv_whoreply(p->to, imc_getkey(&p->data, "text", ""),
-		      imc_getkeyi(&p->data, "sequence", -1));
+              imc_getkeyi(&p->data, "sequence", -1));
 
   /* who: receive a who request */
   else if (!strcasecmp(p->type, "who"))
@@ -225,28 +225,28 @@ void imc_recv(const imc_packet *p)
   /* is-alive: receive a keepalive (broadcast) */
   else if (!strcasecmp(p->type, "is-alive"))
     imc_recv_keepalive(imc_mudof(p->from),
-		       imc_getkey(&p->data, "versionid", "unknown"),
-		       imc_getkey(&p->data, "flags", ""));
+               imc_getkey(&p->data, "versionid", "unknown"),
+               imc_getkey(&p->data, "flags", ""));
 
   /* ping: receive a ping request */
   else if (!strcasecmp(p->type, "ping"))
     imc_recv_ping(imc_mudof(p->from), imc_getkeyi(&p->data, "time-s", 0),
-		  imc_getkeyi(&p->data, "time-us", 0), p->i.path);
+          imc_getkeyi(&p->data, "time-us", 0), p->i.path);
 
   /* ping-reply: receive a ping reply */
   else if (!strcasecmp(p->type, "ping-reply"))
     imc_recv_pingreply(imc_mudof(p->from), imc_getkeyi(&p->data, "time-s", 0),
-		       imc_getkeyi(&p->data, "time-us", 0),
-		       imc_getkey(&p->data, "path", NULL), p->i.path);
+               imc_getkeyi(&p->data, "time-us", 0),
+               imc_getkey(&p->data, "path", NULL), p->i.path);
 
   /* mail: mail something to a local player */
   else if (!strcasecmp(p->type, "mail"))
     imc_recv_mail(imc_getkey(&p->data, "from", "error@hell"),
-		  imc_getkey(&p->data, "to", "error@hell"),
-		  imc_getkey(&p->data, "date", "(IMC error: bad date)"),
-		  imc_getkey(&p->data, "subject", "no subject"),
-		  imc_getkey(&p->data, "id", "bad_id"),
-		  imc_getkey(&p->data, "text", ""));
+          imc_getkey(&p->data, "to", "error@hell"),
+          imc_getkey(&p->data, "date", "(IMC error: bad date)"),
+          imc_getkey(&p->data, "subject", "no subject"),
+          imc_getkey(&p->data, "id", "bad_id"),
+          imc_getkey(&p->data, "text", ""));
 
   /* mail-ok: remote confirmed that they got the mail ok */
   else if (!strcasecmp(p->type, "mail-ok"))
@@ -255,8 +255,8 @@ void imc_recv(const imc_packet *p)
   /* mail-reject: remote rejected our mail, bounce it */
   else if (!strcasecmp(p->type, "mail-reject"))
     imc_recv_mailrej(p->from, imc_getkey(&p->data, "id", "bad_id"),
-		     imc_getkey(&p->data, "reason",
-				"(IMC error: no reason supplied"));
+             imc_getkey(&p->data, "reason",
+                "(IMC error: no reason supplied"));
 
   else if (!strcasecmp(p->type, "info-request"))
     imc_recv_inforequest(p->from, imc_getkey(&p->data, "category", ""));
@@ -268,7 +268,7 @@ void imc_recv(const imc_packet *p)
 
     if (imc_recv_hook)
       if ((*imc_recv_hook)(p, bcast))
-	return;
+    return;
 
     if (bcast || !strcasecmp(p->type, "reject"))
       return;
@@ -333,7 +333,7 @@ void imc_recv_inforequest(const char *from, const char *category)
 
 /* send a message out on a channel */
 void imc_send_chat(const imc_char_data *from, int channel,
-		   const char *argument, const char *to)
+           const char *argument, const char *to)
 {
   imc_packet out;
   char tobuf[IMC_MNAME_LENGTH];
@@ -352,7 +352,7 @@ void imc_send_chat(const imc_char_data *from, int channel,
   while (tobuf[0])
   {
     if (!strcmp(tobuf, "*") || !strcasecmp(tobuf, imc_name) ||
-	imc_find_reminfo(tobuf, 0))
+    imc_find_reminfo(tobuf, 0))
     {
       strcpy(out.to, "*@");
       strcat(out.to, tobuf);
@@ -367,7 +367,7 @@ void imc_send_chat(const imc_char_data *from, int channel,
 
 /* send an emote out on a channel */
 void imc_send_emote(const imc_char_data *from, int channel,
-		    const char *argument, const char *to)
+            const char *argument, const char *to)
 {
   imc_packet out;
   char tobuf[IMC_MNAME_LENGTH];
@@ -385,7 +385,7 @@ void imc_send_emote(const imc_char_data *from, int channel,
   while (tobuf[0])
   {
     if (!strcmp(tobuf, "*") || !strcasecmp(tobuf, imc_name) ||
-	imc_find_reminfo(tobuf, 0))
+    imc_find_reminfo(tobuf, 0))
     {
       strcpy(out.to, "*@");
       strcat(out.to, tobuf);
@@ -400,7 +400,7 @@ void imc_send_emote(const imc_char_data *from, int channel,
 
 /* send a tell to a remote player */
 void imc_send_tell(const imc_char_data *from, const char *to,
-		   const char *argument, int isreply)
+           const char *argument, int isreply)
 {
   imc_packet out;
 

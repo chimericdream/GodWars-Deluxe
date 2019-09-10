@@ -53,30 +53,30 @@ int icec_recv(const imc_packet *p, int bcast)
   if (!strcasecmp(p->type, "ice-msg-r"))
   {
     icec_recv_msg_r(p->from,
-		    imc_getkey(&p->data, "realfrom", ""),
-		    imc_getkey(&p->data, "channel", ""),
-		    imc_getkey(&p->data, "text", ""),
-		    imc_getkeyi(&p->data, "emote", 0));
+            imc_getkey(&p->data, "realfrom", ""),
+            imc_getkey(&p->data, "channel", ""),
+            imc_getkey(&p->data, "text", ""),
+            imc_getkeyi(&p->data, "emote", 0));
     return 1;
   }
   else if (!strcasecmp(p->type, "ice-msg-b"))
   {
     icec_recv_msg_b(p->from,
-		    imc_getkey(&p->data, "channel", ""),
-		    imc_getkey(&p->data, "text", ""),
-		    imc_getkeyi(&p->data, "emote", 0));
+            imc_getkey(&p->data, "channel", ""),
+            imc_getkey(&p->data, "text", ""),
+            imc_getkeyi(&p->data, "emote", 0));
     return 1;
     
   }
   else if (!strcasecmp(p->type, "ice-update"))
   {
     icec_recv_update(p->from,
-		     imc_getkey(&p->data, "channel", ""),
-		     imc_getkey(&p->data, "owner", ""),
-		     imc_getkey(&p->data, "operators", ""),
+             imc_getkey(&p->data, "channel", ""),
+             imc_getkey(&p->data, "owner", ""),
+             imc_getkey(&p->data, "operators", ""),
                      imc_getkey(&p->data, "policy", ""),
-		     imc_getkey(&p->data, "invited", "" ),
-		     imc_getkey(&p->data, "excluded", ""));
+             imc_getkey(&p->data, "invited", ""),
+             imc_getkey(&p->data, "excluded", ""));
     return 1;
   }
   else if (!strcasecmp(p->type, "ice-destroy"))
@@ -89,10 +89,10 @@ int icec_recv(const imc_packet *p, int bcast)
 }
 
 void icec_recv_msg_r(const char *from,
-		     const char *realfrom,
-		     const char *chan,
-		     const char *txt,
-		     int emote)
+             const char *realfrom,
+             const char *chan,
+             const char *txt,
+             int emote)
 {
   ice_channel *c;
   const char *mud;
@@ -119,9 +119,9 @@ void icec_recv_msg_r(const char *from,
 }
 
 void icec_recv_msg_b(const char *from,
-		     const char *chan,
-		     const char *txt,
-		     int emote)
+             const char *chan,
+             const char *txt,
+             int emote)
 {
   ice_channel *c;
 
@@ -139,12 +139,12 @@ void icec_recv_msg_b(const char *from,
 }
 
 void icec_recv_update(const char *from,
-		      const char *chan,
-		      const char *owner,
-		      const char *operators,
-		      const char *policy,
-		      const char *invited,
-		      const char *excluded)
+              const char *chan,
+              const char *owner,
+              const char *operators,
+              const char *policy,
+              const char *invited,
+              const char *excluded)
 {
   ice_channel *c;
   const char *mud;
@@ -223,7 +223,7 @@ void icec_recv_destroy(const char *from, const char *channel)
 
     for (p=icec_channel_list; p; p=p->next)
       if (p->next == c)
-	break;
+    break;
 
     if (p)
       p->next=c->next;
@@ -336,7 +336,7 @@ void ev_icec_timeout(void *data)
 
     for (p=icec_channel_list; p; p=p->next)
       if (p->next == c)
-	break;
+    break;
 
     if (p)
       p->next=c->next;

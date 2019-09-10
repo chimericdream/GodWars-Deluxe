@@ -421,29 +421,29 @@ const char *color_itom(const char *s)
   int i, l;
   int count;
 
-  for (current=s, out=buf, count=0; *current && count<IMC_DATA_LENGTH; )
+  for (current=s, out=buf, count=0; *current && count<IMC_DATA_LENGTH;)
   {
     if (*current=='~' || *current==IMC_COLORCHAR || *current==IMC_COLORCHAR2)
     {
       for (i=0; i<numtrans; i++)
       {
-	l=strlen(trans_table[i].imc);
-	if (l && !strncmp(current, trans_table[i].imc, l))
-	  break;
+    l=strlen(trans_table[i].imc);
+    if (l && !strncmp(current, trans_table[i].imc, l))
+      break;
       }
       
       if (i!=numtrans)       /* match */
       {
-	int len;
+    int len;
 
-	len=strlen(trans_table[i].mud);
-	count+=len;
-	if (count >= IMC_DATA_LENGTH)
-	  break;
-	memcpy(out, trans_table[i].mud, len);
-	out+=len;
-	current+=l;
-	continue;
+    len=strlen(trans_table[i].mud);
+    count+=len;
+    if (count >= IMC_DATA_LENGTH)
+      break;
+    memcpy(out, trans_table[i].mud, len);
+    out+=len;
+    current+=l;
+    continue;
       }
     }
 
@@ -466,29 +466,29 @@ const char *color_mtoi(const char *s)
   int i, l;
   int count;
 
-  for (current=s, out=buf, count=0; *current && count<IMC_DATA_LENGTH; )
+  for (current=s, out=buf, count=0; *current && count<IMC_DATA_LENGTH;)
   {
     if (*current=='~' || *current==IMC_COLORCHAR || *current==IMC_COLORCHAR2)
     {
       for (i=0; i<numtrans; i++)
       {
-	l=strlen(trans_table[i].mud);
-	if (l && !strncmp(current, trans_table[i].mud, l))
-	  break;
+    l=strlen(trans_table[i].mud);
+    if (l && !strncmp(current, trans_table[i].mud, l))
+      break;
       }
       
       if (i!=numtrans)      /* match */
       {
-	int len;
+    int len;
 
-	len=strlen(trans_table[i].imc);
-	count+=len;
-	if (count>=IMC_DATA_LENGTH)
-	  break;
-	memcpy(out, trans_table[i].imc, len);
-	out+=len;
-	current+=l;
-	continue;
+    len=strlen(trans_table[i].imc);
+    count+=len;
+    if (count>=IMC_DATA_LENGTH)
+      break;
+    memcpy(out, trans_table[i].imc, len);
+    out+=len;
+    current+=l;
+    continue;
       }
     }
 
@@ -638,22 +638,22 @@ static const imc_char_data *getdata(CHAR_DATA *ch)
 
 #ifdef ROM
   d.wizi=(ch->invis_level || ch->incog_level ||
-	  IS_AFFECTED(ch, AFF_HIDE) || IS_AFFECTED(ch, AFF_SNEAK) ||
-	  IS_AFFECTED(ch, AFF_INVISIBLE)) ? -1 : 0;
+      IS_AFFECTED(ch, AFF_HIDE) || IS_AFFECTED(ch, AFF_SNEAK) ||
+      IS_AFFECTED(ch, AFF_INVISIBLE)) ? -1 : 0;
 #elif defined(SMAUG)
   d.wizi=(IS_SET(ch->act, PLR_WIZINVIS) ||
-	  IS_AFFECTED(ch, AFF_HIDE) || IS_AFFECTED(ch, AFF_SNEAK) ||
-	  IS_AFFECTED(ch, AFF_INVISIBLE)) ? -1 : 0;
+      IS_AFFECTED(ch, AFF_HIDE) || IS_AFFECTED(ch, AFF_SNEAK) ||
+      IS_AFFECTED(ch, AFF_INVISIBLE)) ? -1 : 0;
 #elif defined(ACK)
   d.wizi=(IS_SET(ch->act, PLR_WIZINVIS) ||
-	  IS_AFFECTED(ch, AFF_HIDE) || IS_AFFECTED(ch, AFF_SNEAK) ||
-	  IS_AFFECTED(ch, AFF_INVISIBLE)) ? -1 : 0;
+      IS_AFFECTED(ch, AFF_HIDE) || IS_AFFECTED(ch, AFF_SNEAK) ||
+      IS_AFFECTED(ch, AFF_INVISIBLE)) ? -1 : 0;
 #elif defined(CIRCLE)
   d.wizi=GET_INVIS_LEV(ch);
 #else
   d.wizi=(IS_SET(ch->act, PLR_WIZINVIS) ||
-	  IS_AFFECTED(ch, AFF_HIDE) || IS_AFFECTED(ch, AFF_SNEAK) ||
-	  IS_AFFECTED(ch, AFF_INVISIBLE)) ? -1 : 0;
+      IS_AFFECTED(ch, AFF_HIDE) || IS_AFFECTED(ch, AFF_SNEAK) ||
+      IS_AFFECTED(ch, AFF_INVISIBLE)) ? -1 : 0;
 #endif
 
   d.level=getlevel(get_trust(ch));
@@ -701,7 +701,7 @@ static const char *getname(CHAR_DATA *ch, const imc_char_data *vict)
       char *buf=imc_getsbuf(IMC_NAME_LENGTH);
 #ifdef ACK
       sprintf(buf, "%s@%s",
-	      (getdata(ch))->wizi ? "A Mystical Being" : "someone", mud);
+          (getdata(ch))->wizi ? "A Mystical Being" : "someone", mud);
 #else
       sprintf(buf, "someone@%s", mud);
 #endif
@@ -737,7 +737,7 @@ static void send_rchannel(CHAR_DATA *ch, char *argument, int number)
   if (!CAN(ch, imc_channels[chan].flag, imc_channels[chan].minlevel))
   {
     sprintf(arg, "You are not authorised to use %s.\n\r",
-	    imc_channels[chan].name);
+        imc_channels[chan].name);
     send_to_char(arg, ch);
     return;
   }
@@ -901,7 +901,7 @@ DEFINE_DO_FUN(do_rtell)
   
   sprintf(buf1,
           RTELL_FORMAT_1,
-	  buf, argument);
+      buf, argument);
   send_to_char(buf1, ch);
 }
 
@@ -985,7 +985,7 @@ DEFINE_DO_FUN(do_rreply)
 
   sprintf(buf1,
           RTELL_FORMAT_1,
-	  IMC_RREPLY_NAME(ch), argument);
+      IMC_RREPLY_NAME(ch), argument);
   send_to_char(buf1, ch);
 } 
 
@@ -1192,16 +1192,16 @@ DEFINE_DO_FUN(do_imc)
   else if (r==0)
   {
     send_to_char("Syntax:  imc add <mudname>\n\r"
-		 "         imc delete <mudname>\n\r"
-		 "         imc set <mudname> all <host> <port> <clientpw> <serverpw>\n\r"
-		 "                 <rcvstamp> <noforward> <flags>\n\r"
-		 "         imc set <mudname> host|port|clientpw|serverpw|rcvstamp|\n\r"
-		 "                           noforward|flags <value>\n\r"
-		 "         imc rename <oldmudname> <newmudname>\n\r"
-		 "         imc localname <mudname>\n\r"
-		 "         imc localport <portnum>\n\r"
-		 "         imc reload\n\r",
-		 ch);
+         "         imc delete <mudname>\n\r"
+         "         imc set <mudname> all <host> <port> <clientpw> <serverpw>\n\r"
+         "                 <rcvstamp> <noforward> <flags>\n\r"
+         "         imc set <mudname> host|port|clientpw|serverpw|rcvstamp|\n\r"
+         "                           noforward|flags <value>\n\r"
+         "         imc rename <oldmudname> <newmudname>\n\r"
+         "         imc localname <mudname>\n\r"
+         "         imc localport <portnum>\n\r"
+         "         imc reload\n\r",
+         ch);
     return;
   }
 
@@ -1329,26 +1329,26 @@ DEFINE_DO_FUN(do_rchannels)
     bool found=FALSE;
     
     strcpy(buf,
-	   "channel      status\n\r"
-	   "-------------------\n\r");
+       "channel      status\n\r"
+       "-------------------\n\r");
 
     for (i=0; i<numchannels; i++)
     {
       if (IS_SET(IMC_DENY_FLAGS(ch), imc_channels[i].flag))
       {
-	sprintf(buf+strlen(buf),
-		"%-10s : you are denied from this channel.\n\r",
-		imc_channels[i].name);
-	found=TRUE;
+    sprintf(buf+strlen(buf),
+        "%-10s : you are denied from this channel.\n\r",
+        imc_channels[i].name);
+    found=TRUE;
       }
       else if (CAN(ch, imc_channels[i].flag, imc_channels[i].minlevel))
       {
-	sprintf(buf+strlen(buf),
-		"%-10s : %s\n\r",
-		imc_channels[i].name,
-		(IS_SET(IMC_DEAF_FLAGS(ch), imc_channels[i].flag) ?
-		 "OFF" : "ON"));
-	found=TRUE;
+    sprintf(buf+strlen(buf),
+        "%-10s : %s\n\r",
+        imc_channels[i].name,
+        (IS_SET(IMC_DEAF_FLAGS(ch), imc_channels[i].flag) ?
+         "OFF" : "ON"));
+    found=TRUE;
       }
     }
 
@@ -1360,7 +1360,7 @@ DEFINE_DO_FUN(do_rchannels)
     else if (CAN(ch, IMC_RTELL, IMC_LEVEL_RTELL))
     {
       sprintf(buf+strlen(buf), "%-10s : %s\n\r", "RTell",
-	      IS_SET(IMC_DEAF_FLAGS(ch), IMC_RTELL) ? "OFF" : "ON");
+          IS_SET(IMC_DEAF_FLAGS(ch), IMC_RTELL) ? "OFF" : "ON");
       found=TRUE;
     }
 
@@ -1372,7 +1372,7 @@ DEFINE_DO_FUN(do_rchannels)
     else if (CAN(ch, IMC_RBEEP, IMC_LEVEL_RBEEP))
     {
       sprintf(buf+strlen(buf), "%-10s : %s\n\r", "RBeep",
-	      IS_SET(IMC_DEAF_FLAGS(ch), IMC_RBEEP) ? "OFF" : "ON");
+          IS_SET(IMC_DEAF_FLAGS(ch), IMC_RBEEP) ? "OFF" : "ON");
       found=TRUE;
     }
 
@@ -1398,10 +1398,10 @@ DEFINE_DO_FUN(do_rchannels)
     else
     {
       send_to_char("Syntax: rchannels          displays current IMC channels\n\r"
-		   "        rchannels +chan    turn on a channel\n\r"
-		   "        rchannels -chan    turn off a channel\n\r"
+           "        rchannels +chan    turn on a channel\n\r"
+           "        rchannels -chan    turn off a channel\n\r"
                    "chan may be an IMC channel name, 'rbeep', 'rtell', 'rinvis', or 'all'.\n\r"
-		   "Multiple settings may be given in one command.\n\r", ch);
+           "Multiple settings may be given in one command.\n\r", ch);
       return;
     }
 
@@ -1409,13 +1409,13 @@ DEFINE_DO_FUN(do_rchannels)
     {
       if (toggle)
       {
-	send_to_char("ALL available IMC channels are now on.\n\r", ch);
-	IMC_DEAF_FLAGS(ch)=0;
+    send_to_char("ALL available IMC channels are now on.\n\r", ch);
+    IMC_DEAF_FLAGS(ch)=0;
       }
       else
       {
-	send_to_char("ALL available IMC channels are now off.\n\r", ch);
-	IMC_DEAF_FLAGS(ch)=-1L;
+    send_to_char("ALL available IMC channels are now off.\n\r", ch);
+    IMC_DEAF_FLAGS(ch)=-1L;
       }
 
       continue;
@@ -1440,19 +1440,19 @@ DEFINE_DO_FUN(do_rchannels)
     {
       for (i=0; i<numchannels; i++)
       {
-	if (CAN(ch, imc_channels[i].flag, imc_channels[i].minlevel) &&
+    if (CAN(ch, imc_channels[i].flag, imc_channels[i].minlevel) &&
 #ifdef CIRCLE
-	    !str_cmp((char *)imc_channels[i].name, arg+1))
+        !str_cmp((char *)imc_channels[i].name, arg+1))
 #else
-	    !str_cmp(imc_channels[i].name, arg+1))
+        !str_cmp(imc_channels[i].name, arg+1))
 #endif
-	  break;
+      break;
       }
 
       if (i==numchannels)
       {
-	sprintf(buf, "You don't have access to an IMC channel called \"%s\".\n\r", arg);
-	send_to_char(buf, ch);
+    sprintf(buf, "You don't have access to an IMC channel called \"%s\".\n\r", arg);
+    send_to_char(buf, ch);
         continue;
       }
 
@@ -1463,9 +1463,9 @@ DEFINE_DO_FUN(do_rchannels)
     if (toggle && !IS_SET(IMC_DEAF_FLAGS(ch), flag))
     {
       if (flag==IMC_RINVIS)
-	strcpy(buf, "You are already visible on IMC.\n\r");
+    strcpy(buf, "You are already visible on IMC.\n\r");
       else
-	sprintf(buf, "%s is already on.\n\r", name);
+    sprintf(buf, "%s is already on.\n\r", name);
       send_to_char(buf, ch);
       continue;
     }
@@ -1473,9 +1473,9 @@ DEFINE_DO_FUN(do_rchannels)
     if (!toggle && IS_SET(IMC_DEAF_FLAGS(ch), flag))
     {
       if (flag==IMC_RINVIS)
-	strcpy(buf, "You are already invisible on IMC.\n\r");
+    strcpy(buf, "You are already invisible on IMC.\n\r");
       else
-	sprintf(buf, "%s is already off.\n\r", name);
+    sprintf(buf, "%s is already off.\n\r", name);
       send_to_char(buf, ch);
       continue;
     }
@@ -1483,9 +1483,9 @@ DEFINE_DO_FUN(do_rchannels)
     if (toggle)
     {
       if (flag==IMC_RINVIS)
-	strcpy(buf, "You are no longer invisible to IMC.\n\r");
+    strcpy(buf, "You are no longer invisible to IMC.\n\r");
       else
-	sprintf(buf, "%s is now ON.\n\r", name);
+    sprintf(buf, "%s is now ON.\n\r", name);
       REMOVE_BIT(IMC_DEAF_FLAGS(ch), flag);
     }
     else
@@ -1493,7 +1493,7 @@ DEFINE_DO_FUN(do_rchannels)
       if (flag==IMC_RINVIS)
         strcpy(buf, "You are now invisible to rwho, rtell and rbeep on IMC.\n\r");
       else
-	sprintf(buf, "%s is now OFF.\n\r", name);
+    sprintf(buf, "%s is now OFF.\n\r", name);
       SET_BIT(IMC_DEAF_FLAGS(ch), flag);
     }
 
@@ -1520,10 +1520,10 @@ DEFINE_DO_FUN(do_rchanset)
   if (!arg[0])
   {
     send_to_char("Syntax: rchanset <char>            - check flag settings\n\r"
-		 "        rchanset <char> +<channel> - set allow flag\n\r"
-		 "        rchanset <char> -<channel> - set deny flag\n\r"
-		 "        rchanset <char> =<channel> - reset allow/deny\n\r",
-		 ch);
+         "        rchanset <char> +<channel> - set allow flag\n\r"
+         "        rchanset <char> -<channel> - set deny flag\n\r"
+         "        rchanset <char> =<channel> - reset allow/deny\n\r",
+         ch);
     return;
   }
 
@@ -1548,52 +1548,52 @@ DEFINE_DO_FUN(do_rchanset)
   if (!argument[0])
   {
     sprintf(buf,
-	    "%s's IMC channel flags:\n\r"
-	    "------------------------------\n\r",
-	    GET_NAME(victim));
+        "%s's IMC channel flags:\n\r"
+        "------------------------------\n\r",
+        GET_NAME(victim));
 
     for (i=0; i<numchannels; i++)
     {
       if (IS_SET(IMC_ALLOW_FLAGS(victim), imc_channels[i].flag))
       {
-	sprintf(buf+strlen(buf), "%-10s : allow flag set.\n\r",
-		imc_channels[i].name);
-	found=TRUE;
+    sprintf(buf+strlen(buf), "%-10s : allow flag set.\n\r",
+        imc_channels[i].name);
+    found=TRUE;
       }
 
       if (IS_SET(IMC_DENY_FLAGS(victim), imc_channels[i].flag))
       {
-	sprintf(buf+strlen(buf), "%-10s : deny flag set.\n\r",
-		imc_channels[i].name);
-	found=TRUE;
+    sprintf(buf+strlen(buf), "%-10s : deny flag set.\n\r",
+        imc_channels[i].name);
+    found=TRUE;
       }
     }
 
     if (IS_SET(IMC_ALLOW_FLAGS(victim), IMC_RTELL))
     {
       sprintf(buf+strlen(buf), "%-10s : allow flag set.\n\r",
-	      "RTell");
+          "RTell");
       found=TRUE;
     }
 
     if (IS_SET(IMC_DENY_FLAGS(victim), IMC_RTELL))
     {
       sprintf(buf+strlen(buf), "%-10s : deny flag set.\n\r",
-	      "RTell");
+          "RTell");
       found=TRUE;
     }
 
     if (IS_SET(IMC_ALLOW_FLAGS(victim), IMC_RBEEP))
     {
       sprintf(buf+strlen(buf), "%-10s : allow flag set.\n\r",
-	      "RBeep");
+          "RBeep");
       found=TRUE;
     }
 
     if (IS_SET(IMC_DENY_FLAGS(victim), IMC_RBEEP))
     {
       sprintf(buf+strlen(buf), "%-10s : deny flag set.\n\r",
-	      "RBeep");
+          "RBeep");
       found=TRUE;
     }
 
@@ -1636,7 +1636,7 @@ DEFINE_DO_FUN(do_rchanset)
 #else
       if (!str_cmp(imc_channels[i].name, argument))
 #endif
-	break;
+    break;
 
     if (i==numchannels)
     {
@@ -1691,7 +1691,7 @@ DEFINE_DO_FUN(do_rchanset)
     {
       REMOVE_BIT(IMC_ALLOW_FLAGS(victim), flag);
       sprintf(buf, "The gods have removed your special access to %s.\n\r",
-	      name);
+          name);
       send_to_char(buf, victim);
 #ifdef ROM
       sprintf(buf, "$N removes %s's access to %s.", GET_NAME(victim), name);
@@ -1722,7 +1722,7 @@ DEFINE_DO_FUN(do_rchanset)
 
 /* renamed from do_rchannel */
 static void do_imcchannel(const imc_char_data *from, int number,
-			  const char *argument, int emote)
+              const char *argument, int emote)
 {
   DESCRIPTOR_DATA *d;
   CHAR_DATA *victim;
@@ -1744,11 +1744,11 @@ static void do_imcchannel(const imc_char_data *from, int number,
   for (d=descriptor_list; d; d=d->next)
   {
     if (d->connected==CON_PLAYING &&
-	(victim=d->original ? d->original : d->character)!=NULL &&
-	!IS_QUIET(victim) &&
-	!IS_SILENT(victim) &&
-	!IS_SET(IMC_DEAF_FLAGS(victim), imc_channels[chan].flag) &&
-	CAN(victim, imc_channels[chan].flag, imc_channels[chan].minlevel))
+    (victim=d->original ? d->original : d->character)!=NULL &&
+    !IS_QUIET(victim) &&
+    !IS_SILENT(victim) &&
+    !IS_SET(IMC_DEAF_FLAGS(victim), imc_channels[chan].flag) &&
+    CAN(victim, imc_channels[chan].flag, imc_channels[chan].minlevel))
     {
 #if NO_VSNPRINTF
       sprintf(buf, str, getname(victim, from), arg);
@@ -1806,35 +1806,35 @@ void imc_traceroute(int ping, const char *pathto, const char *pathfrom)
     for (d=descriptor_list; d; d=d->next)
     {
       if (d->connected == CON_PLAYING &&
-	  (ch =d->original ? d->original : d->character)!=NULL &&
+      (ch =d->original ? d->original : d->character)!=NULL &&
           !str_cmp(ch->name, pinger))
-	break;
+    break;
     }
     
     if (!ch)
       return;
 
     sprintf(buf,
-	    "%s: %dms round-trip-time.\n\r"
-	    "Return path: %s\n\r"
-	    "Send path:   %s\n\r",
-	    imc_firstinpath(pathfrom),
-	    ping,
-	    pathfrom,
-	    pathto ? pathto : "unknown");
+        "%s: %dms round-trip-time.\n\r"
+        "Return path: %s\n\r"
+        "Send path:   %s\n\r",
+        imc_firstinpath(pathfrom),
+        ping,
+        pathfrom,
+        pathto ? pathto : "unknown");
 
     send_to_char(buf, ch);
   }
 }
 
 void imc_recv_chat(const imc_char_data *from, int channel,
-		   const char *argument)
+           const char *argument)
 {
   do_imcchannel(from, channel, argument, 0);
 }
 
 void imc_recv_emote(const imc_char_data *from, int channel,
-		    const char *argument)
+            const char *argument)
 {
   do_imcchannel(from, channel, argument, 1);
 }
@@ -1860,7 +1860,7 @@ static void process_rwho(const imc_char_data *from, const char *argument)
 
   for (d = descriptor_list; d; d = d->next)
   {
-    victim = ( d->original ) ? d->original : d->character;
+    victim = (d->original) ? d->original : d->character;
 
     if (d->connected != CON_PLAYING || !visible(from, getdata(victim)) ||
         IS_NPC(victim))
@@ -1870,20 +1870,20 @@ static void process_rwho(const imc_char_data *from, const char *argument)
     
 #ifdef ACK
     sprintf(output,
-	    "@@W[@@p%s@@W] @@G%s@@N%s@@N\n\r",
-	    ((IS_IMMORTAL(victim) ||
-	      (victim->adept_level>0)) ? victim->pcdata->who_name
-	     : is_remort(victim) ? "    @@mREMORT@@N    "
-	     : "    @@cMORTAL@@N    "),
-	    GET_NAME(victim), GET_TITLE(victim));
+        "@@W[@@p%s@@W] @@G%s@@N%s@@N\n\r",
+        ((IS_IMMORTAL(victim) ||
+          (victim->adept_level>0)) ? victim->pcdata->who_name
+         : is_remort(victim) ? "    @@mREMORT@@N    "
+         : "    @@cMORTAL@@N    "),
+        GET_NAME(victim), GET_TITLE(victim));
 #elif defined(CIRCLE)
     sprintf(output, "%s %s\r\n",
             GET_NAME(victim),
             GET_TITLE(victim));
 #else
     sprintf(output, "%s%s\n\r",
-	    GET_NAME(victim),
-	    GET_TITLE(victim));
+        GET_NAME(victim),
+        GET_TITLE(victim));
 #endif
 
     imc_whoreply_add(color_mtoi(output));
@@ -1898,7 +1898,7 @@ static void process_rwho(const imc_char_data *from, const char *argument)
 static void process_rfinger(const imc_char_data *from, const char *argument)
 {
   imc_send_whoreply(from->name,
-		    "Sorry, no information is available of that type.\n\r", -1);
+            "Sorry, no information is available of that type.\n\r", -1);
 }
 
 void imc_recv_who(const imc_char_data *from, const char *type)
@@ -1927,19 +1927,19 @@ void imc_recv_who(const imc_char_data *from, const char *type)
   else if (!str_cmp(arg, "direct"))
     strcpy(output, imc_list(0));
   else if (!str_cmp(arg, "options") ||
-	   !str_cmp(arg, "services") ||
-	   !str_cmp(arg, "help"))
+       !str_cmp(arg, "services") ||
+       !str_cmp(arg, "help"))
     strcpy(output,
-	   "Available rquery types:\n\r"
-	   "help       - this list\n\r"
-	   "who        - who listing\n\r"
-	   "info       - mud information\n\r"
-	   "list       - active IMC connections\n\r"
-	   "direct     - direct IMC connections\n\r"
-	   "config     - local IMC configuration\n\r"
-	   /* uncomment if you support rfinger */
-	   /* "finger xxx - finger player xxx\n\r" */
-	   );
+       "Available rquery types:\n\r"
+       "help       - this list\n\r"
+       "who        - who listing\n\r"
+       "info       - mud information\n\r"
+       "list       - active IMC connections\n\r"
+       "direct     - direct IMC connections\n\r"
+       "config     - local IMC configuration\n\r"
+       /* uncomment if you support rfinger */
+       /* "finger xxx - finger player xxx\n\r" */
+);
   else
     strcpy(output, "Sorry, no information is available of that type.\n\r");
 
@@ -1954,7 +1954,7 @@ void imc_recv_whoreply(const char *to, const char *text, int sequence)
   for (d=descriptor_list; d; d=d->next)
   {
     if (d->connected==CON_PLAYING &&
-	(victim=d->original ? d->original : d->character)!=NULL &&
+    (victim=d->original ? d->original : d->character)!=NULL &&
         is_name((char *)to, GET_NAME(victim)))
     {
       page_to_char(color_itom(text), victim);
@@ -1972,18 +1972,18 @@ void imc_recv_whois(const imc_char_data *from, const char *to)
   for (d=descriptor_list; d; d = d->next)
   {
     if (d->connected==CON_PLAYING &&
-	(victim = d->original ? d->original : d->character)!=NULL &&
-	!IS_NPC(victim) &&
-	visible(from, getdata(victim)) &&
+    (victim = d->original ? d->original : d->character)!=NULL &&
+    !IS_NPC(victim) &&
+    visible(from, getdata(victim)) &&
 #ifdef CIRCLE
-	(!str_cmp((char *)to, GET_NAME(victim)) ||
+    (!str_cmp((char *)to, GET_NAME(victim)) ||
 #else
-	(!str_cmp(to, GET_NAME(victim)) ||
+    (!str_cmp(to, GET_NAME(victim)) ||
 #endif
-	 (strlen(to)>3 && !str_prefix(to, GET_NAME(victim)))))
+     (strlen(to)>3 && !str_prefix(to, GET_NAME(victim)))))
     {
       sprintf(buf, "rwhois %s : %s@%s is online.\n\r", to,
-	      GET_NAME(victim), imc_name);
+          GET_NAME(victim), imc_name);
       imc_send_whoisreply(from->name, buf);
     }
   }
@@ -1997,7 +1997,7 @@ void imc_recv_whoisreply(const char *to, const char *text)
   for (d=descriptor_list; d; d=d->next)
   {
     if (d->connected==CON_PLAYING &&
-	(victim=d->original ? d->original : d->character)!=NULL &&
+    (victim=d->original ? d->original : d->character)!=NULL &&
         !str_cmp((char *)to, GET_NAME(victim)))
     {
 #ifdef CIRCLE
@@ -2011,7 +2011,7 @@ void imc_recv_whoisreply(const char *to, const char *text)
 }
 
 void imc_recv_tell(const imc_char_data *from, const char *to,
-		   const char *argument, int isreply)
+           const char *argument, int isreply)
 {
   DESCRIPTOR_DATA *d;
   CHAR_DATA *victim, *vch;
@@ -2024,33 +2024,33 @@ void imc_recv_tell(const imc_char_data *from, const char *to,
   for (d=descriptor_list; d; d=d->next)
   {
     if (d->connected==CON_PLAYING &&
-	(vch=d->original ? d->original : d->character)!=NULL &&
-	!IS_NPC(vch) &&  /* sanity check */
+    (vch=d->original ? d->original : d->character)!=NULL &&
+    !IS_NPC(vch) &&  /* sanity check */
         !IS_RINVIS(vch) &&
         (isreply || visible(from, getdata(vch))))
     {
       if (!str_cmp((char *)to, GET_NAME(vch)))
       {
-	victim=vch;
-	break;
+    victim=vch;
+    break;
       }
       if (is_name((char *)to, GET_NAME(vch)))
-	victim=vch;
+    victim=vch;
     }
   }
 
   if (victim)
   {
     if (IS_SET(IMC_DEAF_FLAGS(victim), IMC_RTELL) ||
-	IS_QUIET(victim) ||
+    IS_QUIET(victim) ||
 #ifdef ROM    
-	IS_SET(victim->comm, COMM_DEAF) ||
+    IS_SET(victim->comm, COMM_DEAF) ||
 #endif
 #ifdef ACK
-	IS_SET(victim->pcdata->pflags, PFLAG_AFK) ||
+    IS_SET(victim->pcdata->pflags, PFLAG_AFK) ||
 #endif
-	IS_SILENT(victim) ||
-	IS_SET(IMC_DENY_FLAGS(victim), IMC_RTELL))
+    IS_SILENT(victim) ||
+    IS_SET(IMC_DENY_FLAGS(victim), IMC_RTELL))
     {
 #ifdef CIRCLE
       if (str_cmp((char *)imc_nameof(from->name), "*"))
@@ -2058,25 +2058,25 @@ void imc_recv_tell(const imc_char_data *from, const char *to,
       if (str_cmp(imc_nameof(from->name), "*"))
 #endif
       {
-	sprintf(buf, "%s is not receiving tells.", to);
-	imc_send_tell(NULL, from->name, buf, 1);
+    sprintf(buf, "%s is not receiving tells.", to);
+    imc_send_tell(NULL, from->name, buf, 1);
       }
       return;
     }
     
 #ifdef ROM
     if (IS_SET(victim->comm, COMM_AFK) &&
-	str_cmp(imc_nameof(from->name), "*"))
+    str_cmp(imc_nameof(from->name), "*"))
     {
       sprintf(buf, "%s is AFK, but your tell will go through when they "
-	      "return.", to);
+          "return.", to);
       imc_send_tell(NULL, from->name, buf, 1);
     }
     else if (!victim->desc &&
-	     str_cmp(imc_nameof(from->name), "*"))
+         str_cmp(imc_nameof(from->name), "*"))
     {
       sprintf(buf, "%s is switched, but your tell will go through when "
-	      "they return.", to);
+          "they return.", to);
       imc_send_tell(NULL, from->name, buf, 1);
     }
 #endif
@@ -2088,23 +2088,23 @@ void imc_recv_tell(const imc_char_data *from, const char *to,
 #endif
     {
       if (IMC_RREPLY(victim))
-	imc_strfree(IMC_RREPLY(victim));
+    imc_strfree(IMC_RREPLY(victim));
       if (IMC_RREPLY_NAME(victim))
-	imc_strfree(IMC_RREPLY_NAME(victim));
+    imc_strfree(IMC_RREPLY_NAME(victim));
       
       IMC_RREPLY(victim)=imc_strdup(from->name);
       IMC_RREPLY_NAME(victim)=imc_strdup(getname(victim, from));
-    }	
+    }    
     
 #if NO_VSNPRINTF
     sprintf(buf,
             RTELL_FORMAT_2,
-	    getname(victim, from),
-	    color_itom(argument));
+        getname(victim, from),
+        color_itom(argument));
 #else
     snprintf(buf, IMC_DATA_LENGTH,
-	     RTELL_FORMAT_2,
-	     getname(victim, from), color_itom(argument));
+         RTELL_FORMAT_2,
+         getname(victim, from), color_itom(argument));
 #endif
 
 #ifdef ROM
@@ -2136,24 +2136,24 @@ void imc_recv_beep(const imc_char_data *from, const char *to)
   for (d=descriptor_list; d; d=d->next)
   {
     if (d->connected==CON_PLAYING &&
-	(vch=d->original ? d->original : d->character)!=NULL &&
-	visible(from, getdata(vch)))
+    (vch=d->original ? d->original : d->character)!=NULL &&
+    visible(from, getdata(vch)))
     {
       if (!str_cmp((char *)to, GET_NAME(vch)))
       {
-	victim=vch;
-	break;
+    victim=vch;
+    break;
       }
       if (is_name((char *)to, GET_NAME(vch)))
-	victim=vch;
+    victim=vch;
     }
   }
 
   if (victim)
   {
     if (IS_SET(IMC_DEAF_FLAGS(victim), IMC_RBEEP) ||
-	IS_SILENT(victim) ||
-	!CAN(victim, IMC_RTELL, IMC_LEVEL_RTELL))
+    IS_SILENT(victim) ||
+    !CAN(victim, IMC_RTELL, IMC_LEVEL_RTELL))
     {
       sprintf(buf, "%s is not receiving beeps.", to);
       imc_send_tell(NULL, from->name, buf, 1);
@@ -2178,11 +2178,11 @@ void imc_recv_beep(const imc_char_data *from, const char *to)
 /* shell for sending IMC mail */
 
 void imc_post_mail(CHAR_DATA *from,
-		   const char *sender,
-		   const char *to_list,
-		   const char *subject,
-		   const char *date,
-		   const char *text)
+           const char *sender,
+           const char *to_list,
+           const char *subject,
+           const char *date,
+           const char *text)
 {
   char arg[MAX_STRING_LENGTH];
   const char *temp;
@@ -2233,13 +2233,13 @@ char *imc_mail_arrived (const char *from, const char *to, const char *date,
   if (is_name("all", (char *)to))
     return "Notes to 'all' are not accepted.";
   
-  if ( !(board = imc_find_board()) )
+  if (!(board = imc_find_board()))
     return "Could not find the IMC board.";
   
-  if ( board->num_posts >= board->max_posts )
+  if (board->num_posts >= board->max_posts)
     return "There is no room on the IMC board to post your note.";
   
-  CREATE( pnote, NOTE_DATA, 1 );
+  CREATE(pnote, NOTE_DATA, 1);
   
   /* Smash all the tildes, just in case
    * This is a complete mess, but smaug's string hasher would do bad things
@@ -2267,7 +2267,7 @@ char *imc_mail_arrived (const char *from, const char *to, const char *date,
 
   LINK(pnote, board->first_note, board->last_note, next, prev);
   board->num_posts++;
-  write_board( board );
+  write_board(board);
   
   return NULL;                          /* Errors? What errors? <G> */
 }
@@ -2287,7 +2287,7 @@ char *imc_mail_arrived (const char *from, const char *to, const char *date,
 #endif
 
 char *imc_mail_arrived(const char *from, const char *to, const char *date,
-		       const char *subject, const char *text)
+               const char *subject, const char *text)
 {
   BOARD_DATA *board;
   MESSAGE_DATA *msg;
@@ -2303,7 +2303,7 @@ char *imc_mail_arrived(const char *from, const char *to, const char *date,
     if (!strchr(buf, '@'))
     {
       if (toname[0])
-	return "Sorry, multiple to: names over IMC are not supported here.";
+    return "Sorry, multiple to: names over IMC are not supported here.";
       strcpy(toname, buf);
     }
   }
@@ -2335,7 +2335,7 @@ char *imc_mail_arrived(const char *from, const char *to, const char *date,
 
     for (i=0; i<MAX_KEY_HASH; i++)
       for (pObj=obj_index_hash[i]; pObj; pObj=pObj->next)
-	if (pObj->item_type==ITEM_BOARD && pObj->value[3]==vnum)
+    if (pObj->item_type==ITEM_BOARD && pObj->value[3]==vnum)
           break;
 
     if (!pObj)
@@ -2373,7 +2373,7 @@ char *imc_mail_arrived(const char *from, const char *to, const char *date,
 
 /* post a note; currently all rnotes go to the default note spool */
 char *imc_mail_arrived(const char *from, const char *to, const char *date,
-		       const char *subject, const char *text)
+               const char *subject, const char *text)
 {
   NOTE_DATA *pnote;
 #if defined(MERC) || defined(ENVY)

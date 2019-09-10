@@ -72,9 +72,9 @@ static int control;
 /* sequence memory */
 _imc_memory imc_memory[IMC_MEMORY];
 
-unsigned long imc_sequencenumber;	  /* sequence# for outgoing packets */
+unsigned long imc_sequencenumber;      /* sequence# for outgoing packets */
 
-char *imc_name;			      /* our IMC name */
+char *imc_name;                  /* our IMC name */
 unsigned short imc_port;              /* our port; 0=disabled */
 unsigned long imc_bind;               /* IP to bind to */
 
@@ -133,14 +133,14 @@ imc_connect *imc_new_connect(void)
   imc_connect *c;
 
   c=imc_malloc(sizeof(*c));
-  c->state    = IMC_CLOSED;
-  c->desc     = -1;
-  c->insize   = IMC_MINBUF;
-  c->inbuf    = imc_malloc(c->insize);
-  c->outsize  = IMC_MINBUF;
-  c->outbuf   = imc_malloc(c->outsize);
+  c->state = IMC_CLOSED;
+  c->desc = -1;
+  c->insize = IMC_MINBUF;
+  c->inbuf = imc_malloc(c->insize);
+  c->outsize = IMC_MINBUF;
+  c->outbuf = imc_malloc(c->outsize);
   c->inbuf[0] = c->outbuf[0] = 0;
-  c->info     = NULL;
+  c->info = NULL;
   c->spamcounter1=0;
   c->spamcounter2=0;
   c->spamtime1=0;
@@ -175,7 +175,7 @@ void imc_extract_connect(imc_connect *c)
   else
   {
     for (c_find=imc_connect_list; c_find && c_find->next!=c;
-	 c_find=c_find->next)
+     c_find=c_find->next)
       ;
     
     if (!c_find)
@@ -210,26 +210,26 @@ static void updateroutes(const char *path)
       /* check if its in the list already */
 
       p = imc_find_reminfo(sender, 1);
-      if (!p)			/* not in list yet, create a new entry */
+      if (!p)            /* not in list yet, create a new entry */
       {
-	p=imc_new_reminfo();
+    p=imc_new_reminfo();
 
-	p->name    = imc_strdup(sender);
-	p->ping    = 0;
-	p->alive   = imc_now;
-	p->route   = imc_strdup(last);
-	p->version = imc_strdup("unknown");
-	p->type    = IMC_REMINFO_NORMAL;
+    p->name = imc_strdup(sender);
+    p->ping = 0;
+    p->alive = imc_now;
+    p->route = imc_strdup(last);
+    p->version = imc_strdup("unknown");
+    p->type = IMC_REMINFO_NORMAL;
       }
       else
-      {				/* already in list, update the entry */
-	if (strcasecmp(last, p->route))
-	{
-	  imc_strfree(p->route);
-	  p->route=imc_strdup(last);
-	}
-	p->alive=imc_now;
-	p->type = IMC_REMINFO_NORMAL;
+      {                /* already in list, update the entry */
+    if (strcasecmp(last, p->route))
+    {
+      imc_strfree(p->route);
+      p->route=imc_strdup(last);
+    }
+    p->alive=imc_now;
+    p->type = IMC_REMINFO_NORMAL;
       }
 
       imc_cancel_event(ev_expire_reminfo, p);
@@ -240,7 +240,7 @@ static void updateroutes(const char *path)
 
     temp=strchr(temp, '!');
     if (temp)
-      temp++;			/* skip to just after the next '!' */
+      temp++;            /* skip to just after the next '!' */
   }
 }
 
@@ -303,12 +303,12 @@ static void do_accept(void)
   }
 
   c=imc_new_connect();
-  c->state    = IMC_WAIT1;
-  c->desc     = d;
+  c->state = IMC_WAIT1;
+  c->desc = d;
 
   imc_add_event(IMC_LOGIN_TIMEOUT, ev_login_timeout, c, 1);
   imc_logstring("connection from %s:%d on descriptor %d",
-		inet_ntoa(sa.sin_addr), ntohs(sa.sin_port), d);
+        inet_ntoa(sa.sin_addr), ntohs(sa.sin_port), d);
 }
 
 /* close given connection */
@@ -329,8 +329,8 @@ static void do_close(imc_connect *c)
   /* handle reconnects */
   if (c->info)
     if ((c->info->flags & IMC_RECONNECT) &&
-	!(c->info->flags & IMC_DENY) &&
-	!(c->info->flags & IMC_CLIENT))
+    !(c->info->flags & IMC_DENY) &&
+    !(c->info->flags & IMC_CLIENT))
     {
       imc_setup_reconnect(c->info);
     }
@@ -382,7 +382,7 @@ static void do_read(imc_connect *c)
     return;
   }
   
-  if (r<0)			/* EAGAIN error */
+  if (r<0)            /* EAGAIN error */
     return;
 
   temp[r]=0;
@@ -437,22 +437,22 @@ static void do_write(imc_connect *c)
   }
 
   size = strlen(c->outbuf);
-  if (!size)			/* nothing to write */
+  if (!size)            /* nothing to write */
     return;
 
   w=write(c->desc, c->outbuf, size);
   if (!w || (w<0 && errno != EAGAIN && errno != EWOULDBLOCK))
   {
     if (!c->info || !(c->info->flags & IMC_QUIET))
-      if (w<0)			/* write error */
+      if (w<0)            /* write error */
         imc_lerror("%s: write", imc_getconnectname(c));
-      else			/* socket was closed */
+      else            /* socket was closed */
         imc_logerror("%s: write: EOF", imc_getconnectname(c));
     do_close(c);
     return;
   }
 
-  if (w<0)			/* EAGAIN */
+  if (w<0)            /* EAGAIN */
     return;
 
   /* throw away data we wrote */
@@ -468,7 +468,7 @@ static void do_send(imc_connect *c, const char *line)
   if (c->state==IMC_CLOSED)
     return;
 
-  imc_debug(c, 1, line);	/* log outgoing traffic */
+  imc_debug(c, 1, line);    /* log outgoing traffic */
 
   if (!c->outbuf[0])
     c->newoutput=1;
@@ -525,7 +525,7 @@ static const char *getline(char *buffer)
   {
     buf[0]=0;
     imc_shrinksbuf(buf);
-    return NULL;		/* so no line available */
+    return NULL;        /* so no line available */
   }
 
   /* terminate return string */
@@ -560,7 +560,7 @@ static int checkrepeat(const char *mud, unsigned long seq)
   if (imc_memory[memory_head].from)
     imc_strfree(imc_memory[memory_head].from);
 
-  imc_memory[memory_head].from     = imc_strdup(mud);
+  imc_memory[memory_head].from = imc_strdup(mud);
   imc_memory[memory_head].sequence = seq;
   
   memory_head++;
@@ -593,9 +593,9 @@ static void do_notify(void)
   char buf[100];
 
   sprintf(buf, "name=%s\nversion=%s\nemail=%s\n",
-	  imc_name ? imc_name : "unset",
-	  IMC_VERSIONID,
-	  imc_siteinfo.email);
+      imc_name ? imc_name : "unset",
+      IMC_VERSIONID,
+      imc_siteinfo.email);
 
   s=socket(AF_INET, SOCK_DGRAM, 0);
   if (s<0)
@@ -687,7 +687,7 @@ static void forward(imc_packet *p)
     {
       imc_stats.sequence_drops++;
       imc_logstring("sequence drop: %s (seq=%ld, top=%ld)",
-		    p->i.path, p->i.sequence, route->top_sequence);
+            p->i.path, p->i.sequence, route->top_sequence);
       return;
     }
     if (p->i.sequence > route->top_sequence)
@@ -721,24 +721,24 @@ static void forward(imc_packet *p)
 
   to=imc_mudof(p->i.to);
 
-  isbroadcast=!strcmp(to, "*");	  /* broadcasts are, well, broadcasts */
-  broadcast=1;		          /* unless we know better, flood packets */
-  i=0;  			  /* make gcc happy */
-  direct=NULL;			  /* no direct connection to send on */
+  isbroadcast=!strcmp(to, "*");      /* broadcasts are, well, broadcasts */
+  broadcast=1;                  /* unless we know better, flood packets */
+  i=0;                /* make gcc happy */
+  direct=NULL;              /* no direct connection to send on */
   
   /* convert 'to' fields that we have a route for to a hop along the route */
   
   if (!isbroadcast &&
       (route=imc_find_reminfo(to, 0)) != NULL &&
       route->route != NULL &&
-      !inpath(p->i.path, route->route))	/* avoid circular routing */
+      !inpath(p->i.path, route->route))    /* avoid circular routing */
   {
     /*  check for a direct connection: if we find it, and the route isn't
      *  to it, then the route is a little suspect.. also send it direct
      */
     if (strcasecmp(to, route->route) &&
-	(i=imc_getinfo(to))!=NULL &&
-	i->connection)
+    (i=imc_getinfo(to))!=NULL &&
+    i->connection)
       direct=i;
     to=route->route;
   }
@@ -752,18 +752,18 @@ static void forward(imc_packet *p)
     broadcast=0;
 
   if (broadcast)
-  {				/* need to forward a packet */
+  {                /* need to forward a packet */
     for (c=imc_connect_list; c; c=c->next)
       if (c->state==IMC_CONNECTED)
       {
-	/* don't forward to sites that have already received it,
-	 * or sites that don't need this packet
-	 */
-	if (inpath(p->i.path, c->info->name) ||
-	    (p->i.stamp & c->info->noforward)!=0)
-	  continue;
+    /* don't forward to sites that have already received it,
+     * or sites that don't need this packet
+     */
+    if (inpath(p->i.path, c->info->name) ||
+        (p->i.stamp & c->info->noforward)!=0)
+      continue;
 
-	do_send_packet(c, p);
+    do_send_packet(c, p);
       }
   }
   else
@@ -775,7 +775,7 @@ static void forward(imc_packet *p)
 
     /* send on direct connection, if we have one */
     if (direct && direct!=i && direct->connection &&
-	!inpath(p->i.path, direct->name))
+    !inpath(p->i.path, direct->name))
       do_send_packet(direct->connection, p);
   }
 }
@@ -789,8 +789,8 @@ static void clientpassword(imc_connect *c, const char *argument)
 
   argument=imc_getarg(argument, arg1, 3);      /* packet type (has to be PW) */
   argument=imc_getarg(argument, name, IMC_MNAME_LENGTH);  /* remote mud name */
-  argument=imc_getarg(argument, pw, IMC_PW_LENGTH);	         /* password */
-  argument=imc_getarg(argument, version, 20);	/* optional version=n string */
+  argument=imc_getarg(argument, pw, IMC_PW_LENGTH);             /* password */
+  argument=imc_getarg(argument, version, 20);    /* optional version=n string */
 
   if (strcasecmp(arg1, "PW"))
   {
@@ -820,16 +820,16 @@ static void clientpassword(imc_connect *c, const char *argument)
     return;
   }
 
-  if (i->connection)	                      /* kill old connections */
+  if (i->connection)                          /* kill old connections */
     do_close(i->connection);
 
   /* register them */
-  i->connection     = c;
+  i->connection = c;
 
-  c->state          = IMC_CONNECTED;
-  c->info           = i;
-  c->spamcounter1   = 0;
-  c->spamcounter2   = 0;
+  c->state = IMC_CONNECTED;
+  c->info = i;
+  c->spamcounter1 = 0;
+  c->spamcounter2 = 0;
 
   /* check for a version string (assume version 0 if not present) */
   if (sscanf(version, "version=%hu", &c->version)!=1)
@@ -841,7 +841,7 @@ static void clientpassword(imc_connect *c, const char *argument)
   {
     if (!(i->flags & IMC_QUIET))
     imc_logstring("%s: unsupported version %d",
-		  imc_getconnectname(c), c->version);
+          imc_getconnectname(c), c->version);
     do_close(c);
     return;
   }
@@ -849,12 +849,12 @@ static void clientpassword(imc_connect *c, const char *argument)
   /* send our response */
 
   sprintf(response, "PW %s %s version=%d",
-	  imc_name, i->serverpw, IMC_VERSION);
+      imc_name, i->serverpw, IMC_VERSION);
   do_send(c, response);
 
   if (!(i->flags & IMC_QUIET))
     imc_logstring("%s: connected (version %d)",
-		  imc_getconnectname(c), c->version);
+          imc_getconnectname(c), c->version);
 
   c->info->timer_duration=IMC_MIN_RECONNECT_TIME;
   c->info->last_connected=imc_now;
@@ -868,7 +868,7 @@ static void serverpassword(imc_connect *c, const char *argument)
   char arg1[3], name[IMC_MNAME_LENGTH], pw[IMC_PW_LENGTH], version[20];
   imc_info *i;
 
-  argument=imc_getarg(argument, arg1, 3);	/* has to be PW */
+  argument=imc_getarg(argument, arg1, 3);    /* has to be PW */
   argument=imc_getarg(argument, name, IMC_MNAME_LENGTH);
   argument=imc_getarg(argument, pw, IMC_PW_LENGTH);
   argument=imc_getarg(argument, version, 20);
@@ -890,14 +890,14 @@ static void serverpassword(imc_connect *c, const char *argument)
     return;
   }
 
-  if (i->connection)	/* kill old connections */
+  if (i->connection)    /* kill old connections */
     do_close(i->connection);
 
-  i->connection         = c;
+  i->connection = c;
 
-  c->state              = IMC_CONNECTED;
-  c->spamcounter1       = 0;
-  c->spamcounter2       = 0;
+  c->state = IMC_CONNECTED;
+  c->spamcounter1 = 0;
+  c->spamcounter2 = 0;
 
   /* check for a version string (assume version 0 if not present) */
   if (sscanf(version, "version=%hu", &c->version)!=1)
@@ -909,14 +909,14 @@ static void serverpassword(imc_connect *c, const char *argument)
   {
     if (!(i->flags & IMC_QUIET))
       imc_logstring("%s: unsupported version %d",
-		    imc_getconnectname(c), c->version);
+            imc_getconnectname(c), c->version);
     do_close(c);
     return;
   }
 
   if (!(i->flags & IMC_QUIET))
     imc_logstring("%s: connected (version %d)",
-		  imc_getconnectname(c), c->version);
+          imc_getconnectname(c), c->version);
   c->info->timer_duration=IMC_MIN_RECONNECT_TIME;
   c->info->last_connected=imc_now;
   imc_cancel_event(ev_login_timeout, c);
@@ -952,7 +952,7 @@ void imc_startup_port(void)
     
   i=1;
   if (setsockopt(control, SOL_SOCKET, SO_REUSEADDR, (void *)&i,
-		 sizeof(i))<0)
+         sizeof(i))<0)
   {
     imc_lerror("imc_startup_port: SO_REUSEADDR");
     close(control);
@@ -973,8 +973,8 @@ void imc_startup_port(void)
     return;
   }
 
-  sa.sin_family      = AF_INET;
-  sa.sin_port        = htons(imc_port);
+  sa.sin_family = AF_INET;
+  sa.sin_port = htons(imc_port);
   sa.sin_addr.s_addr = imc_bind; /* already in network order */
   
   if (bind(control, (struct sockaddr *)&sa, sizeof(sa))<0)
@@ -1025,9 +1025,9 @@ static int getsndbuf(void)
   if ((s=socket(AF_INET, SOCK_STREAM, 0))<0)
     return 0;
 
-  sa.sin_family      = AF_INET;
-  sa.sin_addr.s_addr = inet_addr("127.0.0.1");	/* connect to localhost */
-  sa.sin_port        = htons(9);                /* 'discard' service */
+  sa.sin_family = AF_INET;
+  sa.sin_addr.s_addr = inet_addr("127.0.0.1");    /* connect to localhost */
+  sa.sin_port = htons(9);                /* 'discard' service */
 
   if (connect(s, (struct sockaddr *)&sa, sizeof(sa))<0)
   {
@@ -1090,7 +1090,7 @@ void imc_startup_network(void)
   if (imc_active != IA_CONFIG2)
   {
     imc_logerror("imc_startup_network: called with imc_active==%d",
-		 imc_active);
+         imc_active);
     return;
   }
 
@@ -1114,16 +1114,16 @@ void imc_startup_network(void)
 
   if (imc_port)
     imc_startup_port();
-  imc_stats.start    = imc_now;
-  imc_stats.rx_pkts  = 0;
-  imc_stats.tx_pkts  = 0;
+  imc_stats.start = imc_now;
+  imc_stats.rx_pkts = 0;
+  imc_stats.tx_pkts = 0;
   imc_stats.rx_bytes = 0;
   imc_stats.tx_bytes = 0;
   imc_stats.sequence_drops = 0;
 
   imc_add_event(20, ev_keepalive, NULL, 1);
 
-  imc_mail_startup();		/* start up the mailer */
+  imc_mail_startup();        /* start up the mailer */
 
   if (!lock_prefix())
   {
@@ -1134,8 +1134,8 @@ void imc_startup_network(void)
   /* do autoconnects */
   for (info=imc_info_list; info; info=info->next)
     if (!(info->flags & IMC_NOAUTO) &&
-	!(info->flags & IMC_CLIENT) &&
-	!(info->flags & IMC_DENY))
+    !(info->flags & IMC_CLIENT) &&
+    !(info->flags & IMC_DENY))
       imc_connect_to(info->name);
 }
 
@@ -1179,7 +1179,7 @@ void imc_shutdown_network(void)
   if (imc_active < IA_UP)
   {
     imc_logerror("imc_shutdown_network: called with imc_active==%d",
-		 imc_active);
+         imc_active);
     return;
   }
 
@@ -1195,15 +1195,15 @@ void imc_shutdown_network(void)
     imc_shutdown_port();
 
   imc_logstring("rx %ld packets, %ld bytes (%ld/second)",
-		imc_stats.rx_pkts,
-		imc_stats.rx_bytes,
-		(imc_now == imc_stats.start) ? 0 :
-		imc_stats.rx_bytes / (imc_now - imc_stats.start));
+        imc_stats.rx_pkts,
+        imc_stats.rx_bytes,
+        (imc_now == imc_stats.start) ? 0 :
+        imc_stats.rx_bytes / (imc_now - imc_stats.start));
   imc_logstring("tx %ld packets, %ld bytes (%ld/second)",
-		imc_stats.tx_pkts,
-		imc_stats.tx_bytes,
-		(imc_now == imc_stats.start) ? 0 :
-		imc_stats.tx_bytes / (imc_now - imc_stats.start));
+        imc_stats.tx_pkts,
+        imc_stats.tx_bytes,
+        (imc_now == imc_stats.start) ? 0 :
+        imc_stats.tx_bytes / (imc_now - imc_stats.start));
   imc_logstring("largest packet %d bytes", imc_stats.max_pkt);
   imc_logstring("dropped %d packets by sequence number",
                 imc_stats.sequence_drops);
@@ -1332,7 +1332,7 @@ int imc_fill_fdsets(int maxfd, fd_set *read, fd_set *write, fd_set *exc)
 
     switch (c->state)
     {
-    case IMC_CONNECTING:	/* connected/error when writable */
+    case IMC_CONNECTING:    /* connected/error when writable */
       FD_SET(c->desc, write);
       break;
     case IMC_CONNECTED:
@@ -1340,7 +1340,7 @@ int imc_fill_fdsets(int maxfd, fd_set *read, fd_set *write, fd_set *exc)
     case IMC_WAIT2:
       FD_SET(c->desc, read);
       if (c->outbuf[0])
-	FD_SET(c->desc, write);
+    FD_SET(c->desc, write);
       break;
     }
   }
@@ -1377,11 +1377,11 @@ void imc_idle(int s, int us)
 
   if (maxfd)
     while ((i=select(maxfd+1, &read, &write, &exc, &timeout)) < 0 &&
-	   errno == EINTR)	/* loop, ignoring signals */
+       errno == EINTR)    /* loop, ignoring signals */
       ;
   else
     while ((i=select(0, NULL, NULL, NULL, &timeout)) < 0 &&
-	   errno == EINTR)
+       errno == EINTR)
       ;
     
 
@@ -1441,63 +1441,63 @@ void imc_idle_select(fd_set *read, fd_set *write, fd_set *exc, time_t now)
       do_read(c);
 
     while (c->state!=IMC_CLOSED &&
-	   (c->spamtime1>=0 || c->spamcounter1<=IMC_SPAM1MAX) &&
-	   (c->spamtime2>=0 || c->spamcounter2<=IMC_SPAM2MAX) &&
-	   (command = getline(c->inbuf)) != NULL)
+       (c->spamtime1>=0 || c->spamcounter1<=IMC_SPAM1MAX) &&
+       (c->spamtime2>=0 || c->spamcounter2<=IMC_SPAM2MAX) &&
+       (command = getline(c->inbuf)) != NULL)
     {
       if (strlen(command) > imc_stats.max_pkt)
-	imc_stats.max_pkt=strlen(command);
+    imc_stats.max_pkt=strlen(command);
 
       if (!c->spamcounter1 && !c->spamtime1)
-	imc_add_event(IMC_SPAM1INTERVAL, ev_spam1, c, 0);
+    imc_add_event(IMC_SPAM1INTERVAL, ev_spam1, c, 0);
       c->spamcounter1++;
 
       if (!c->spamcounter2 && !c->spamtime2)
-	imc_add_event(IMC_SPAM2INTERVAL, ev_spam2, c, 0);
+    imc_add_event(IMC_SPAM2INTERVAL, ev_spam2, c, 0);
       c->spamcounter2++;
 
-      imc_debug(c, 0, command);	/* log incoming packets */
+      imc_debug(c, 0, command);    /* log incoming packets */
 
       switch (c->state)
       {
       case IMC_CLOSED:
-	break;
+    break;
       case IMC_WAIT1:
-	clientpassword(c, command);
-	break;
+    clientpassword(c, command);
+    break;
       case IMC_WAIT2:
-	serverpassword(c, command);
-	break;
+    serverpassword(c, command);
+    break;
       case IMC_CONNECTED:
-	p = do_interpret_packet(c, command);
-	if (p)
-	{
+    p = do_interpret_packet(c, command);
+    if (p)
+    {
 #ifdef IMC_PARANOIA
-	  /* paranoia: check the last entry in the path is the same as the
-	   * sending mud. Also check the first entry to see that it matches
-	   * the sender.
-	   */
+      /* paranoia: check the last entry in the path is the same as the
+       * sending mud. Also check the first entry to see that it matches
+       * the sender.
+       */
 
-	  imc_stats.rx_pkts++;
+      imc_stats.rx_pkts++;
 
-	  if (strcasecmp(c->info->name,
-			 imc_lastinpath(p->i.path)))
-	    imc_logerror("PARANOIA: packet from %s allegedly from %s",
-			 c->info->name,
-			 imc_lastinpath(p->i.path));
-	  else if (strcasecmp(imc_mudof(p->i.from), imc_firstinpath(p->i.path)))
-	    imc_logerror("PARANOIA: packet from %s has firstinpath %s",
-			 p->i.from,
-			 imc_firstinpath(p->i.path));
-	  else
-	    forward(p);		/* only forward if its a valid packet! */
+      if (strcasecmp(c->info->name,
+             imc_lastinpath(p->i.path)))
+        imc_logerror("PARANOIA: packet from %s allegedly from %s",
+             c->info->name,
+             imc_lastinpath(p->i.path));
+      else if (strcasecmp(imc_mudof(p->i.from), imc_firstinpath(p->i.path)))
+        imc_logerror("PARANOIA: packet from %s has firstinpath %s",
+             p->i.from,
+             imc_firstinpath(p->i.path));
+      else
+        forward(p);        /* only forward if its a valid packet! */
 #else
-	  imc_stats.rx_pkts++;
-	  forward(p);
+      imc_stats.rx_pkts++;
+      forward(p);
 #endif
-	  imc_freedata(&p->data);
-	}
-	break;
+      imc_freedata(&p->data);
+    }
+    break;
       }
     }
   }
@@ -1507,7 +1507,7 @@ void imc_idle_select(fd_set *read, fd_set *write, fd_set *exc, time_t now)
     c_next=c->next;
     
     if (c->state!=IMC_CLOSED &&
-	(FD_ISSET(c->desc, write) || c->newoutput))
+    (FD_ISSET(c->desc, write) || c->newoutput))
     {
       c->newoutput=0;
       do_write(c);
@@ -1588,7 +1588,7 @@ int imc_connect_to(const char *mud)
     sa.sin_addr.s_addr = *(unsigned long *) hostinfo->h_addr;
   }
 
-  sa.sin_port   = htons(i->port);
+  sa.sin_port = htons(i->port);
   sa.sin_family = AF_INET;
 
   desc=socket(AF_INET, SOCK_STREAM, 0);
@@ -1616,16 +1616,16 @@ int imc_connect_to(const char *mud)
 
   c=imc_new_connect();
 
-  c->desc     = desc;
-  c->state    = IMC_CONNECTING;
-  c->info     = i;
+  c->desc = desc;
+  c->state = IMC_CONNECTING;
+  c->info = i;
 
   imc_add_event(IMC_LOGIN_TIMEOUT, ev_login_timeout, c, 1);
 
   sprintf(buf, "PW %s %s version=%d",
-	  imc_name,
-	  i->clientpw,
-	  IMC_VERSION);
+      imc_name,
+      i->clientpw,
+      IMC_VERSION);
   do_send(c, buf);
 
   return 1;
@@ -1651,8 +1651,8 @@ int imc_disconnect(const char *mud)
       if (c->desc==d)
       {
         imc_logstring("disconnect descriptor %s", imc_getconnectname(c));
-	do_close(c);
-	return 1;
+    do_close(c);
+    return 1;
       }
 
     imc_qerror("%d: no matching descriptor", d);
@@ -1689,7 +1689,7 @@ void imc_send(imc_packet *p)
   /* initialize packet fields that the caller shouldn't/doesn't set */
 
   p->i.stamp = 0;
-  p->i.path[0]  = 0;
+  p->i.path[0] = 0;
   
   p->i.sequence = imc_sequencenumber++;
   if (!imc_sequencenumber)
@@ -1700,7 +1700,7 @@ void imc_send(imc_packet *p)
   imc_sncpy(p->i.from, p->from, IMC_NAME_LENGTH - 1);
   strcat(p->i.from, "@");
   imc_sncpy(p->i.from + strlen(p->i.from), imc_name,
-	    IMC_NAME_LENGTH - strlen(p->i.from));
+        IMC_NAME_LENGTH - strlen(p->i.from));
 
   forward(p);
 }
@@ -1711,16 +1711,16 @@ imc_info *imc_new_info()
 
   i=imc_malloc(sizeof(*i));
 
-  i->name       = NULL;
-  i->host       = NULL;
-  i->port       = 0;
+  i->name = NULL;
+  i->host = NULL;
+  i->port = 0;
   i->connection = NULL;
-  i->clientpw   = NULL;
-  i->serverpw   = NULL;
+  i->clientpw = NULL;
+  i->serverpw = NULL;
   i->timer_duration = IMC_MIN_RECONNECT_TIME;
-  i->rcvstamp   = 0;
-  i->noforward  = 0;
-  i->flags      = 0;
+  i->rcvstamp = 0;
+  i->noforward = 0;
+  i->flags = 0;
   i->last_connected = 0;
 
   /* ugly hack, but Too Bad, I don't want another global floating around */

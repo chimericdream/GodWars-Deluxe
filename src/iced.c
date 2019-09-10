@@ -63,7 +63,7 @@ static void fixactive(ice_channel *c)
     if (!imc_hasname(buf, mud))
     {
       if (buf[0])
-	strcat(buf, " ");
+    strcat(buf, " ");
 
       strcat(buf, mud);
     }
@@ -79,7 +79,7 @@ static void fixactive(ice_channel *c)
     if (!imc_hasname(buf, mud))
     {
       if (buf[0])
-	strcat(buf, " ");
+    strcat(buf, " ");
 
       strcat(buf, mud);
     }
@@ -119,14 +119,14 @@ void iced_save_channels(void)
   {
     /* save */
     fprintf(fp,
-	    "%s %s %d\n"
-	    "op %s\n"
-	    "invite %s\n"
-	    "exclude %s\n",
-	    c->name, c->owner, c->policy,
-	    c->operators[0] ? c->operators : "none",
-	    c->invited[0] ? c->invited : "none",
-	    c->excluded[0] ? c->excluded : "none");
+        "%s %s %d\n"
+        "op %s\n"
+        "invite %s\n"
+        "exclude %s\n",
+        c->name, c->owner, c->policy,
+        c->operators[0] ? c->operators : "none",
+        c->invited[0] ? c->invited : "none",
+        c->excluded[0] ? c->excluded : "none");
   }
 
   fclose(fp);
@@ -154,10 +154,10 @@ void iced_load_channels(void)
   }
 
   while (fscanf(fp,
-		"%s %s %d\n"
-		"op %[^\n]\n"
-		"invite %[^\n]\n"
-		"exclude %[^\n]\n", buf1, buf2, &p, buf3, buf4, buf5) == 6)
+        "%s %s %d\n"
+        "op %[^\n]\n"
+        "invite %[^\n]\n"
+        "exclude %[^\n]\n", buf1, buf2, &p, buf3, buf4, buf5) == 6)
   {
     ice_channel *c=imc_malloc(sizeof(*c));
 
@@ -183,9 +183,9 @@ void iced_load_channels(void)
     fixactive(c);
 
     imc_logstring("ICEd: loaded %s (%s) owned by %s",
-		  c->name,
-		  c->policy == ICE_OPEN ? "open" :
-		  c->policy == ICE_CLOSED ? "closed" : "private",
+          c->name,
+          c->policy == ICE_OPEN ? "open" :
+          c->policy == ICE_CLOSED ? "closed" : "private",
                   c->owner);
   }
 
@@ -291,25 +291,25 @@ int iced_recv(const imc_packet *p, int bcast)
   if (!strcasecmp(p->type, "ice-cmd"))
   {
     iced_recv_command(p->from,
-		      imc_getkey(&p->data, "channel", ""),
-		      imc_getkey(&p->data, "command", ""),
-		      imc_getkey(&p->data, "data", ""), 0);
+              imc_getkey(&p->data, "channel", ""),
+              imc_getkey(&p->data, "command", ""),
+              imc_getkey(&p->data, "data", ""), 0);
     return 1;
   }
   else if (!strcasecmp(p->type, "ice-msg-p"))
   {
     /* private message to be forwarded */
     iced_recv_msg_p(p->from,
-		    imc_getkey(&p->data, "channel", ""),
-		    imc_getkey(&p->data, "text", ""),
-		    imc_getkeyi(&p->data, "emote", 0));
+            imc_getkey(&p->data, "channel", ""),
+            imc_getkey(&p->data, "text", ""),
+            imc_getkeyi(&p->data, "emote", 0));
     return 1;
   }
   else if (!strcasecmp(p->type, "ice-msg-b"))
   {
     /* check for misdirection */
     iced_recv_msg_b(p->from,
-		    imc_getkey(&p->data, "channel", ""));
+            imc_getkey(&p->data, "channel", ""));
     return 1;
   }
   else if (!strcasecmp(p->type, "ice-refresh"))
@@ -368,7 +368,7 @@ int iced_getaccess(ice_channel *c, const char *from)
 }
 
 void iced_recv_command(const char *from, const char *chan, const char *cmd,
-		       const char *data, int override)
+               const char *data, int override)
 {
   ice_channel *c;
   int i;
@@ -414,18 +414,18 @@ void iced_list(ice_channel *c, const char *cname, const char *from, const char *
   int access;
 
   strcpy(out,
-	 "Available commands:\n"
-	 "Lvl Ok? Name\n");
+     "Available commands:\n"
+     "Lvl Ok? Name\n");
 
   access=iced_getaccess(c, from);
   
   for (i=0; iced_cmdtable[i].name; i++)
   {
     sprintf(out+strlen(out),
-	    " %d %s %s\n",
-	    iced_cmdtable[i].level,
-	    access >= iced_cmdtable[i].level ? "Yes" : "No ",
-	    iced_cmdtable[i].name);
+        " %d %s %s\n",
+        iced_cmdtable[i].level,
+        access >= iced_cmdtable[i].level ? "Yes" : "No ",
+        iced_cmdtable[i].name);
   }
 
   imc_send_tell(&iced_char, from, out, 1);
@@ -463,7 +463,7 @@ void iced_destroy(ice_channel *c, const char *cname, const char *from, const cha
   {
     for (p=iced_channel_list; p; p=p->next)
       if (p->next == c)
-	break;
+    break;
 
     if (!p)
       imc_logerror("%s not in channel list?!", c->name);
@@ -769,12 +769,12 @@ void iced_refresh(ice_channel *c, const char *cname, const char *from, const cha
     {
       if (!next_list)
       {
-	next_list=iced_channel_list;
-	imc_add_event(5, ev_iced_chanlist, (void *)from, 1);
+    next_list=iced_channel_list;
+    imc_add_event(5, ev_iced_chanlist, (void *)from, 1);
       }
       else
       {
-	imc_send_tell(&iced_char, from, "Refresh already in progress - try again later.", 1);
+    imc_send_tell(&iced_char, from, "Refresh already in progress - try again later.", 1);
       }
     }
     else
@@ -792,7 +792,7 @@ void iced_refresh(ice_channel *c, const char *cname, const char *from, const cha
 
 /* private message - for forwarding */
 void iced_recv_msg_p(const char *from, const char *chan, const char *txt,
-		     int emote)
+             int emote)
 {
   ice_channel *c;
   imc_packet out;
@@ -952,7 +952,7 @@ void iced_update(ice_channel *c, const char *to)
   imc_addkey(&out.data, "owner", c->owner);
   imc_addkey(&out.data, "operators", c->operators);
   imc_addkey(&out.data, "policy", c->policy == ICE_OPEN ? "open" :
-			 c->policy == ICE_CLOSED ? "closed" : "private");
+             c->policy == ICE_CLOSED ? "closed" : "private");
   imc_addkey(&out.data, "invited", c->invited);
   imc_addkey(&out.data, "excluded", c->excluded);
 

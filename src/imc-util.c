@@ -56,7 +56,7 @@
  * - static buffer allocation
  */
 
-char imc_lasterror[IMC_DATA_LENGTH];	  /* last error reported */
+char imc_lasterror[IMC_DATA_LENGTH];      /* last error reported */
 
 /*
  *  Static buffer allocation - greatly reduces IMC's memory footprint
@@ -152,7 +152,7 @@ void imc_addkey(imc_data *p, const char *key, const char *value)
     {
       imc_strfree(p->key[i]);
       imc_strfree(p->value[i]);
-      p->key[i]   = NULL;
+      p->key[i] = NULL;
       p->value[i] = NULL;
       break;
     }
@@ -163,7 +163,7 @@ void imc_addkey(imc_data *p, const char *key, const char *value)
   for (i=0; i<IMC_MAX_KEYS; i++)
     if (!p->key[i])
     {
-      p->key[i]   = imc_strdup(key);
+      p->key[i] = imc_strdup(key);
       p->value[i] = imc_strdup(value);
       return;
     }
@@ -184,7 +184,7 @@ void imc_initdata(imc_data *p)
 
   for (i=0; i<IMC_MAX_KEYS; i++)
   {
-    p->key[i]   = NULL;
+    p->key[i] = NULL;
     p->value[i] = NULL;
   }
 }
@@ -433,7 +433,7 @@ void imc_removename(char **list, const char *name)
     if (strcasecmp(arg, name))
     {
       if (buf[0])
-	strcat(buf, " ");
+    strcat(buf, " ");
       strcat(buf, arg);
     }
     p=imc_getarg(p, arg, IMC_NAME_LENGTH);
@@ -499,7 +499,7 @@ int imc_flagvalue(const char *name, const imc_flag_type *table)
 
     for (i=0; table[i].name; i++)
       if (!strcasecmp(table[i].name, buf))
-	value |= table[i].value;
+    value |= table[i].value;
   }
 }
 
@@ -545,14 +545,14 @@ imc_reminfo *imc_new_reminfo(void)
 
   p=imc_malloc(sizeof(imc_reminfo));
 
-  p->name    = NULL;
+  p->name = NULL;
   p->version = NULL;
-  p->route   = NULL;
-  p->alive   = 0;
-  p->ping    = 0;
+  p->route = NULL;
+  p->alive = 0;
+  p->ping = 0;
   p->top_sequence = 0;
-  p->next    = imc_reminfo_list;
-  p->type    = IMC_REMINFO_NORMAL;
+  p->next = imc_reminfo_list;
+  p->type = IMC_REMINFO_NORMAL;
 
   imc_reminfo_list=p;
   return p;
